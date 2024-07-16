@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyCryptoApp</string>
+
+    <string name="active_coin">active</string>
+    <string name="inactive_coin">inactive</string>
+    <string name="content_description_money">money</string>
+    <string name="content_description_go_back">go back</string>
+</resources>
