@@ -1,26 +1,24 @@
 package com.foivos.mycryptoapp.presentation.coin_list
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.foivos.mycryptoapp.data.remote.CoinPaprikaApi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class CoinListViewModel @Inject constructor(
-    api: CoinPaprikaApi
+
 ) : ViewModel() {
 
-    init {
-        /*viewModelScope.launch {
-            try {
-                val result = api.fetchCoins()
-                Timber.d("result success: ${result.size}")
-            } catch (exception: Exception) {
-                Timber.d("result error: ${exception.message}")
-            }
-        }*/
-    }
+    var state by mutableStateOf(CoinListState())
+        private set
+
+    private var eventChannel = Channel<CoinListEvent>()
+    val events = eventChannel.receiveAsFlow()
+
+
 }

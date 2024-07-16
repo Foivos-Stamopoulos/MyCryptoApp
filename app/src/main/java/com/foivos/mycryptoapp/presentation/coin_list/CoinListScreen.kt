@@ -14,25 +14,46 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.domain.model.Coin
-import com.foivos.mycryptoapp.domain.util.preview_data.CoinProvider
 import com.foivos.mycryptoapp.domain.util.preview_data.CoinsProvider
 import com.foivos.mycryptoapp.presentation.coin_list.components.CoinListItem
 import com.foivos.mycryptoapp.presentation.components.MyCryptoToolbar
+import com.foivos.mycryptoapp.presentation.ui.ObserveAsEvents
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 
 @Composable
-fun CoinListScreenRoot() {
+fun CoinListScreenRoot(
+    onCoinClick: (String) -> Unit,
+    viewModel: CoinListViewModel = hiltViewModel()
+) {
 
+    ObserveAsEvents(
+        flow = viewModel.events) { event ->
+            when (event) {
+                is CoinListEvent.Error -> {
+                    TODO("Show error toast")
+                }
+            }
+    }
+
+    CoinListScreen(
+        state = viewModel.state,
+        onAction = { action ->
+            when (action) {
+                is CoinListAction.OnCoinClick -> {
+                    onCoinClick(action.coinId)
+                }
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
