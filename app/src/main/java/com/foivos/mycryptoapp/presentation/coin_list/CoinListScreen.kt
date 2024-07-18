@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -14,12 +15,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.domain.model.Coin
@@ -62,8 +67,13 @@ fun CoinListScreen(
     state: CoinListState,
     onAction: (CoinListAction) -> Unit
 ) {
+    val topAppBarState = rememberTopAppBarState()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
+        state = topAppBarState
+    )
+
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier,
         topBar = {
             MyCryptoToolbar(
                 showBackButton = false,
@@ -71,7 +81,8 @@ fun CoinListScreen(
                 startContent = { Icon(
                     Icons.Default.AttachMoney,
                     stringResource(id = R.string.content_description_money)
-                ) }
+                ) },
+                scrollBehavior = scrollBehavior
             )
         }
     ) {
@@ -83,10 +94,13 @@ fun CoinListScreen(
                 .background(MaterialTheme.colorScheme.background)) {
 
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
             ) {
                 items(
-                    items = state.coins
+                    items = state.coins,
+                    key = { it.id }
                 ) { coin ->
                     CoinListItem(
                         coin = coin,
@@ -99,7 +113,10 @@ fun CoinListScreen(
 
             if (state.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(24.dp),
+                    strokeWidth = 2.dp
                 )
             }
         }

@@ -84,6 +84,13 @@ class CoinsProvider : PreviewParameterProvider<List<Coin>> {
                     name = "Usd Coin",
                     rank = 11,
                     symbol = "USDC"
+                ),
+                Coin(
+                    id = "uniswapId",
+                    isActive = false,
+                    name = "Uniswap",
+                    rank = 12,
+                    symbol = "UNI"
                 )
             )
         )

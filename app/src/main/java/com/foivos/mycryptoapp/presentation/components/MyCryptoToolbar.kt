@@ -30,8 +30,6 @@ fun MyCryptoToolbar(
     showBackButton: Boolean,
     title: String,
     modifier: Modifier = Modifier,
-    //menuItems: List<DropDownItem> = emptyList(),
-    onMenuItemClick: (Int) -> Unit = {},
     onBackClick: () -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
     startContent: (@Composable () -> Unit)? = null
@@ -54,7 +52,8 @@ fun MyCryptoToolbar(
                     )
                 }
             }
-        }
+        },
+        scrollBehavior = scrollBehavior
     )
 }
 

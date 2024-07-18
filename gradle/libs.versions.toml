@@ -40,7 +40,6 @@ squareup-retrofit2-converter-gson = { group= "com.squareup.retrofit2", name = "c
 dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 dagger-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose" , version.ref = "androidx-hilt" }
-androidx-hilt-lifecycle-viewmodel = { group = "androidx.hilt", name = "hilt-lifecycle-viewmodel" , version.ref = "androidx-hilt" }
 
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 okHttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp3LoggingInterceptor" }

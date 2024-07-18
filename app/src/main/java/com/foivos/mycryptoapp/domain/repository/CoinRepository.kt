@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CoinRepository {
 
-    suspend fun getCoins(): Flow<List<Coin>>
+    fun getCoins(): Flow<List<Coin>>
 
     //suspend fun getCoinDetail(): Result<Coin, DataError.Local>
 
