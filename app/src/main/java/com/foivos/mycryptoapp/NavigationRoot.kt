@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.foivos.mycryptoapp.presentation.coin_detail.CoinDetailScreenRoot
 import com.foivos.mycryptoapp.presentation.coin_list.CoinListScreenRoot
 
 @Composable
@@ -42,7 +43,11 @@ private fun NavGraphBuilder.coinGraph(
         composable(
             route = "coin_detail" + "/{coinId}"
         ) {
-            Text(text = "This is coin detail screen")
+            CoinDetailScreenRoot(
+                onBackClick = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 

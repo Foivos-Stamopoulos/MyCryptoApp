@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 
 @Dao
 interface CoinDao {
@@ -31,4 +32,9 @@ interface CoinDao {
     )
     suspend fun getCoins(): List<CoinEntity>
 
+    @Upsert
+    suspend fun upsertCoin(coin: CoinEntity)
+
+    @Upsert
+    suspend fun upsertCoins(coins: List<CoinEntity>)
 }

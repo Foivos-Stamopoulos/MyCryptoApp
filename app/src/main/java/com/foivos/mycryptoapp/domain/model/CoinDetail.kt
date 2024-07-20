@@ -1,7 +1,5 @@
 package com.foivos.mycryptoapp.domain.model
 
-import com.foivos.mycryptoapp.data.remote.dto.TeamMemberDto
-
 data class CoinDetail(
     val coinId: String,
     val name: String,
@@ -10,5 +8,5 @@ data class CoinDetail(
     val rank: Int,
     val isActive: Boolean,
     val tags: List<String>,
-    val team: List<TeamMemberDto>
+    val team: List<TeamMember>
 )

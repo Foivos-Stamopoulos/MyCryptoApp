@@ -1,6 +1,7 @@
 package com.foivos.mycryptoapp.presentation.coin_list
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -40,11 +42,18 @@ fun CoinListScreenRoot(
     viewModel: CoinListViewModel = hiltViewModel()
 ) {
 
+    val context = LocalContext.current
+
     ObserveAsEvents(
-        flow = viewModel.events) { event ->
+        flow = viewModel.events
+    ) { event ->
             when (event) {
                 is CoinListEvent.Error -> {
-                    TODO("Show error toast")
+                    Toast.makeText(
+                        context,
+                        event.error.asString(context),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
@@ -105,7 +114,7 @@ fun CoinListScreen(
                     CoinListItem(
                         coin = coin,
                         onItemClick = {
-
+                            onAction(CoinListAction.OnCoinClick(coin.id))
                         }
                     )
                 }

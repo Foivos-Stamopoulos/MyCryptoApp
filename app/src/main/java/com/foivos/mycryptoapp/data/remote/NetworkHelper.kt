@@ -1,13 +1,15 @@
 package com.foivos.mycryptoapp.data.remote
 
 import com.foivos.mycryptoapp.domain.util.DataError
-import retrofit2.Response
+import com.foivos.mycryptoapp.domain.util.Result
+import retrofit2.HttpException
 
 object NetworkHelper {
 
-    /*suspend inline fun <reified T> responseToResult(response: okhttp3.Response): Result<T, DataError.Network> {
-        return when(response.status.value) {
-            in 200..299 -> Result.Success(response.body<T>())
+    fun responseToErrorResult(
+        exception: HttpException,
+    ): Result<Nothing, DataError.Network> {
+        return when(exception.code()) {
             401 -> Result.Error(DataError.Network.UNAUTHORIZED)
             408 -> Result.Error(DataError.Network.REQUEST_TIMEOUT)
             409 -> Result.Error(DataError.Network.CONFLICT)
@@ -16,6 +18,6 @@ object NetworkHelper {
             in 500..599 -> Result.Error(DataError.Network.SERVER_ERROR)
             else -> Result.Error(DataError.Network.UNKNOWN)
         }
-    }*/
+    }
 
 }

@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.foivos.mycryptoapp.domain.repository.CoinRepository
+import com.foivos.mycryptoapp.domain.util.DataError
+import com.foivos.mycryptoapp.domain.util.Result
+import com.foivos.mycryptoapp.presentation.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -18,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CoinListViewModel @Inject constructor(
-    private val coinRepository: CoinRepository
+    coinRepository: CoinRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(CoinListState())
@@ -29,10 +32,22 @@ class CoinListViewModel @Inject constructor(
 
 
     init {
+
+        viewModelScope.launch {
+            val result = coinRepository.fetchCoins()
+            when (result) {
+                is Result.Error -> {
+                    eventChannel.send(CoinListEvent.Error(UiText.DynamicString("tourta")))
+                }
+                is Result.Success -> {
+                    // Do nothing
+                }
+            }
+        }
+
         coinRepository.getCoins().onStart {
             state = state.copy(isLoading = true)
         }.onEach { coins ->
-            delay(3000)
             state = state.copy(coins = coins, isLoading = false)
         }.launchIn(viewModelScope)
     }

@@ -45,7 +45,7 @@ fun CoinListItem(
             overflow = TextOverflow.Ellipsis
         )
         Text(
-            text = if (coin.isActive) stringResource(id = R.string.active_coin) else stringResource(id = R.string.inactive_coin),
+            text = stringResource(id = if (coin.isActive) R.string.active_coin else R.string.inactive_coin),
             color = if (coin.isActive) Color.Green else Color.Red,
             fontStyle = FontStyle.Italic,
             textAlign = TextAlign.End,

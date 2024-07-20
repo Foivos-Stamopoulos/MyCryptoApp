@@ -12,3 +12,13 @@ fun CoinEntity.toCoin(): Coin {
         symbol = symbol
     )
 }
+
+fun Coin.toCoinEntity(): CoinEntity {
+    return CoinEntity(
+        id = id,
+        isActive = isActive,
+        name = name,
+        rank = rank,
+        symbol = symbol
+    )
+}

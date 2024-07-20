@@ -5,4 +5,6 @@
     <string name="inactive_coin">inactive</string>
     <string name="content_description_money">money</string>
     <string name="content_description_go_back">go back</string>
+    <string name="team_members">Team members</string>
+    <string name="tags">Tags</string>
 </resources>
