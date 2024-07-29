@@ -3,21 +3,24 @@ package com.foivos.mycryptoapp.presentation.coin_detail
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.foivos.mycryptoapp.domain.model.CoinDetail
-import com.foivos.mycryptoapp.domain.model.TeamMember
+import com.foivos.mycryptoapp.Constants
 import com.foivos.mycryptoapp.domain.repository.CoinRepository
+import com.foivos.mycryptoapp.domain.util.Result
+import com.foivos.mycryptoapp.presentation.ui.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CoinDetailViewModel @Inject constructor(
-    coinRepository: CoinRepository
+    private val coinRepository: CoinRepository,
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     var state by mutableStateOf(CoinDetailState())
@@ -28,42 +31,25 @@ class CoinDetailViewModel @Inject constructor(
 
     init {
 
-        val coinDetail = CoinDetail(
-            coinId = "1",
-            name = "Bitcoin",
-            description = "Bitcoin is lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-            symbol = "BTC",
-            rank = 1,
-            isActive = true,
-            tags = listOf("Mining", "Cryptocurrency", "Payments", "Digital currency", "Encryption", "Virtual accounting system"),
-            team = listOf(
-                TeamMember(
-                    id = "1",
-                    name =  "John Smith",
-                    position = "Founder"
-                ),
-                TeamMember(
-                    id = "2",
-                    name =  "George Hilt",
-                    position = "Blockchain Developer"
-                ),
-                TeamMember(
-                    id = "3",
-                    name =  "Mark Brown",
-                    position = "Blockchain Developer"
-                ),
-                TeamMember(
-                    id = "4",
-                    name =  "Sara Garcia",
-                    position = "Blockchain Developer"
-                )
-            )
-        )
+        savedStateHandle.get<String>(Constants.PARAM_COIN_ID)?.let { coinId ->
+            Timber.d(coinId)
+            fetchCoinDetail(coinId)
+        }
 
+    }
+
+    private fun fetchCoinDetail(coinId: String) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
-            delay(2000)
-            state = state.copy(isLoading = false, coinDetail = coinDetail)
+            when (val result = coinRepository.fetchCoinDetail(coinId)) {
+                is Result.Error -> {
+                    state = state.copy(isLoading = false)
+                    eventChannel.send(CoinDetailEvent.Error(result.error.asUiText()))
+                }
+                is Result.Success -> {
+                    state = state.copy(isLoading = false, coinDetail = result.data)
+                }
+            }
         }
     }
 

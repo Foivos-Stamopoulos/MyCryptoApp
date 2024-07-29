@@ -1,250 +1,204 @@
 package com.foivos.mycryptoapp.data.remote
 
-import com.foivos.mycryptoapp.data.remote.dto.CoinDetailDto
-import com.foivos.mycryptoapp.data.remote.mappers.toCoin
+import com.foivos.mycryptoapp.data.remote.mappers.toCoinDetail
 import com.foivos.mycryptoapp.domain.data_source.RemoteCoinDataSource
 import com.foivos.mycryptoapp.domain.model.Coin
+import com.foivos.mycryptoapp.domain.model.CoinDetail
+import com.foivos.mycryptoapp.domain.model.TeamMember
 import com.foivos.mycryptoapp.domain.util.DataError
 import com.foivos.mycryptoapp.domain.util.Result
-import com.foivos.mycryptoapp.domain.util.asEmptyDataResult
-import com.google.gson.Gson
-import retrofit2.HttpException
-import java.nio.channels.UnresolvedAddressException
 import javax.inject.Inject
-import kotlin.coroutines.cancellation.CancellationException
 
 class RetrofitRemoteCoinDataSource @Inject constructor(
     private val api: CoinPaprikaApi
 ) : RemoteCoinDataSource {
 
     override suspend fun fetchCoins(): Result<List<Coin>, DataError.Network> {
-        try {
+        /*return try {
             val result = api.fetchCoins()
-            return Result.Success(result.map { it.toCoin() }.subList(0,80))
-        } catch(e: UnresolvedAddressException) {
-            e.printStackTrace()
-            return Result.Error(DataError.Network.NO_INTERNET)
-        } /*catch (e: SerializationException) {
-            e.printStackTrace()
-            return Result.Error(DataError.Network.SERIALIZATION)
-        }*/ catch (httpException: HttpException) {
-            return NetworkHelper.responseToErrorResult(httpException)
+            return Result.Success(result.map { it.toCoin() })
+        } catch(e: Exception) {
+            NetworkHelper.exceptionToErrorResult(e)
+        }*/
+        return mockCoinList
+    }
+
+    override suspend fun fetchCoinById(coinId: String): Result<CoinDetail, DataError.Network> {
+        return try {
+            Result.Success(api.fetchCoinById(coinId).toCoinDetail())
         } catch (e: Exception) {
-            if (e is CancellationException) throw e
-            e.printStackTrace()
-            return Result.Error(DataError.Network.UNKNOWN)
+            NetworkHelper.exceptionToErrorResult(e)
         }
-        /*return Result.Success(listOf(
-            Coin(
-                id = "bitcoinId",
-                isActive = true,
-                name = "Bitcoin",
-                rank = 1,
-                symbol = "BTC"
-            ),
-            Coin(
-                id = "tether1Id",
-                isActive = false,
-                name = "Tether",
-                rank = 2,
-                symbol = "USDT1"
-            ),
-            Coin(
-                id = "ethereumId",
-                isActive = true,
-                name = "Ethereum",
-                rank = 3,
-                symbol = "ETH"
-            ),
-            Coin(
-                id = "cardanoId",
-                isActive = false,
-                name = "Cardano",
-                rank = 4,
-                symbol = "ADA"
-            ),
-            Coin(
-                id = "hexId",
-                isActive = true,
-                name = "Hex",
-                rank = 5,
-                symbol = "HEX"
-            ),
-            Coin(
-                id = "binanceCoinId",
-                isActive = false,
-                name = "Binance Coin",
-                rank = 6,
-                symbol = "BNB"
-            ),
-            Coin(
-                id = "tetherId",
-                isActive = false,
-                name = "Tether",
-                rank = 7,
-                symbol = "USDT"
-            ),
-            Coin(
-                id = "xrpId",
-                isActive = true,
-                name = "XRP",
-                rank = 8,
-                symbol = "XRP"
-            ),
-            Coin(
-                id = "solanaId",
-                isActive = false,
-                name = "Solana",
-                rank = 9,
-                symbol = "SOL"
-            ),
-            Coin(
-                id = "polcadotId",
-                isActive = true,
-                name = "Polkadot",
-                rank = 10,
-                symbol = "DOT"
-            ),
-            Coin(
-                id = "usdCoinId",
-                isActive = false,
-                name = "Usd Coin",
-                rank = 11,
-                symbol = "USDC"
-            ),
-            Coin(
-                id = "uniswapId",
-                isActive = false,
-                name = "Uniswap",
-                rank = 12,
-                symbol = "UNI"
-            ),
-            Coin(
-                id = "test1Id",
-                isActive = false,
-                name = "Test1",
-                rank = 13,
-                symbol = "TST1"
-            ),
-            Coin(
-                id = "test2Id",
-                isActive = false,
-                name = "Test2",
-                rank = 14,
-                symbol = "TST2"
-            ),
-        ))*/
+
+        //return Result.Success(mockCoinDetail)
     }
 
-    override suspend fun fetchCoinById(coinId: String): Result<Coin, DataError.Network> {
+    private val mockCoinList = Result.Success(listOf(
+        Coin(
+            id = "bitcoinId",
+            isActive = true,
+            name = "Bitcoin",
+            rank = 0,
+            symbol = "BTC"
+        ),
+        Coin(
+            id = "tether-hermionegrangerclintonamberamyrose9inu",
+            isActive = false,
+            name = "HermioneGrangerClintonAmberAmyRose9Inu",
+            rank = 0,
+            symbol = "TETHER"
+        ),
+        Coin(
+            id = "ethereum-voldemorttrumprobotnik69pepe",
+            isActive = true,
+            name = "VoldemortTrumpRobotnik69Pepe",
+            rank = 0,
+            symbol = "ETHEREUM"
+        ),
+        Coin(
+            id = "hexdc-hexdc",
+            isActive = true,
+            name = "HEXDC",
+            rank = 0,
+            symbol = "HEXDC"
+        ),
+        Coin(
+            id = "bcartel-binance-cartel",
+            isActive = false,
+            name = "Binance Cartel",
+            rank = 0,
+            symbol = "BCARTEL"
+        ),
+        Coin(
+            id = "axpr-axpire",
+            isActive = true,
+            name = "aXpire",
+            rank = 0,
+            symbol = "AXPR"
+        ),
+        Coin(
+            id = "solanaId",
+            isActive = false,
+            name = "Solana",
+            rank = 0,
+            symbol = "SOL"
+        ),
+        Coin(
+            id = "polcadotId",
+            isActive = true,
+            name = "Polkadot",
+            rank = 0,
+            symbol = "DOT"
+        ),
+        Coin(
+            id = "usdCoinId",
+            isActive = false,
+            name = "Usd Coin",
+            rank = 0,
+            symbol = "USDC"
+        ),
+        Coin(
+            id = "uniswapId",
+            isActive = false,
+            name = "Uniswap",
+            rank = 0,
+            symbol = "UNI"
+        ),
+        Coin(
+            id = "dinu-dogey-inu",
+            isActive = false,
+            name = "Dogey-Inu",
+            rank = 0,
+            symbol = "DINU"
+        ),
+        Coin(
+            id = "alice-alice",
+            isActive = false,
+            name = "Alice",
+            rank = 0,
+            symbol = "ALICE"
+        ),
+        Coin(
+            id = "quadro-quadrotoken",
+            isActive = false,
+            name = "QUADROTOKEN",
+            rank = 0,
+            symbol = "QUADRO"
+        ), Coin(
+            id = "crypt-cryptonaught",
+            isActive = false,
+            name = "CRYPTONAUGHT",
+            rank = 0,
+            symbol = "CRYPT"
+        ), Coin(
+            id = "dseth-diversified-staked-eth-index-dseth",
+            isActive = false,
+            name = "Diversified Staked ETH Index (dsETH)",
+            rank = 0,
+            symbol = "DSETH"
+        ), Coin(
+            id = "tgol-tgonline-token",
+            isActive = false,
+            name = "TGOnline Token",
+            rank = 0,
+            symbol = "TGOL"
+        ), Coin(
+            id = "nepe-nyanpepe",
+            isActive = false,
+            name = "NyanPepe",
+            rank = 0,
+            symbol = "NEPE"
+        ), Coin(
+            id = "gucci-guccicake",
+            isActive = false,
+            name = "GucciCake",
+            rank = 0,
+            symbol = "GUCCI"
+        ), Coin(
+            id = "popo-popo-the-genie",
+            isActive = false,
+            name = "POPO The GENIE",
+            rank = 0,
+            symbol = "POPO"
+        ), Coin(
+            id = "chow-chow-chow",
+            isActive = false,
+            name = "CHOW CHOW",
+            rank = 0,
+            symbol = "CHOW"
+        )
+    ))
 
-        val jsonResponse = "{\n" +
-                "  \"id\": \"btc-bitcoin\",\n" +
-                "  \"name\": \"Bitcoin\",\n" +
-                "  \"symbol\": \"BTC\",\n" +
-                "  \"parent\": {\n" +
-                "    \"id\": \"eth-ethereum\",\n" +
-                "    \"name\": \"Ethereum\",\n" +
-                "    \"symbol\": \"ETH\"\n" +
-                "  },\n" +
-                "  \"rank\": 1,\n" +
-                "  \"is_new\": false,\n" +
-                "  \"is_active\": true,\n" +
-                "  \"type\": \"coin\",\n" +
-                "  \"logo\": \"https://static.coinpaprika.com/coin/bnb-binance-coin/logo.png\",\n" +
-                "  \"tags\": [\n" +
-                "    {\n" +
-                "      \"id\": \"blockchain-service\",\n" +
-                "      \"name\": \"Blockchain Service\",\n" +
-                "      \"coin_counter\": 160,\n" +
-                "      \"ico_counter\": 80\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"team\": [\n" +
-                "    {\n" +
-                "      \"id\": \"vitalik-buterin\",\n" +
-                "      \"name\": \"Vitalik Buterin\",\n" +
-                "      \"position\": \"Author\"\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"description\": \"Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator.\",\n" +
-                "  \"message\": \"string\",\n" +
-                "  \"open_source\": true,\n" +
-                "  \"hardware_wallet\": true,\n" +
-                "  \"started_at\": \"2009-01-03T00:00:00Z\",\n" +
-                "  \"development_status\": \"Working product\",\n" +
-                "  \"proof_type\": \"Proof of work\",\n" +
-                "  \"org_structure\": \"Decentralized\",\n" +
-                "  \"hash_algorithm\": \"SHA256\",\n" +
-                "  \"contract\": \"string\",\n" +
-                "  \"platform\": \"string\",\n" +
-                "  \"contracts\": [\n" +
-                "    {\n" +
-                "      \"contract\": \"string\",\n" +
-                "      \"platform\": \"string\",\n" +
-                "      \"type\": \"string\"\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"links\": {\n" +
-                "    \"explorer\": [\n" +
-                "      \"http://blockchain.com/explorer\",\n" +
-                "      \"https://blockchair.com/bitcoin/blocks\",\n" +
-                "      \"https://blockexplorer.com/\",\n" +
-                "      \"https://live.blockcypher.com/btc/\"\n" +
-                "    ],\n" +
-                "    \"facebook\": [\n" +
-                "      \"https://www.facebook.com/bitcoins/\"\n" +
-                "    ],\n" +
-                "    \"reddit\": [\n" +
-                "      \"https://www.reddit.com/r/bitcoin\"\n" +
-                "    ],\n" +
-                "    \"source_code\": [\n" +
-                "      \"https://github.com/bitcoin/bitcoin\"\n" +
-                "    ],\n" +
-                "    \"website\": [\n" +
-                "      \"https://bitcoin.org/\"\n" +
-                "    ],\n" +
-                "    \"youtube\": [\n" +
-                "      \"https://www.youtube.com/watch?v=Um63OQz3bjo\"\n" +
-                "    ],\n" +
-                "    \"medium\": null\n" +
-                "  },\n" +
-                "  \"links_extended\": [\n" +
-                "    {\n" +
-                "      \"url\": \"http://blockchain.com/explorer\",\n" +
-                "      \"type\": \"explorer\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"url\": \"https://www.reddit.com/r/bitcoin\",\n" +
-                "      \"type\": \"reddit\",\n" +
-                "      \"stats\": {\n" +
-                "        \"subscribers\": 1009135\n" +
-                "      }\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"url\": \"https://github.com/bitcoin/bitcoin\",\n" +
-                "      \"type\": \"source_code\",\n" +
-                "      \"stats\": {\n" +
-                "        \"contributors\": 730,\n" +
-                "        \"stars\": 36613\n" +
-                "      }\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"url\": \"https://bitcoin.org/\",\n" +
-                "      \"type\": \"website\"\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"whitepaper\": {\n" +
-                "    \"link\": \"https://static.coinpaprika.com/storage/cdn/whitepapers/215.pdf\",\n" +
-                "    \"thumbnail\": \"https://static.coinpaprika.com/storage/cdn/whitepapers/217.jpg\"\n" +
-                "  },\n" +
-                "  \"first_data_at\": \"2018-10-03T11:48:19Z\",\n" +
-                "  \"last_data_at\": \"2019-05-03T11:00:00\"\n" +
-                "}"
-
-        val dto = Gson().fromJson(jsonResponse, CoinDetailDto::class.java)
-
-        TODO("Not yet implemented")
-    }
+    private val mockCoinDetail = CoinDetail(
+        coinId = "1",
+        name = "Bitcoin",
+        description = "Bitcoin is lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+        symbol = "BTC",
+        rank = 1,
+        isActive = true,
+        tags = listOf("Mining", "Cryptocurrency", "Payments", "Digital currency", "Encryption", "Virtual accounting system"),
+        team = listOf(
+            TeamMember(
+                id = "1",
+                name =  "John Smith",
+                position = "Founder"
+            ),
+            TeamMember(
+                id = "2",
+                name =  "George Hilt",
+                position = "Blockchain Developer"
+            ),
+            TeamMember(
+                id = "3",
+                name =  "Mark Brown",
+                position = "Blockchain Developer"
+            ),
+            TeamMember(
+                id = "4",
+                name =  "Sara Garcia",
+                position = "Blockchain Developer"
+            )
+        )
+    )
 
 }

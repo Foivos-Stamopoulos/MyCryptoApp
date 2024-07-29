@@ -1,6 +1,7 @@
 package com.foivos.mycryptoapp.domain.repository
 
 import com.foivos.mycryptoapp.domain.model.Coin
+import com.foivos.mycryptoapp.domain.model.CoinDetail
 import com.foivos.mycryptoapp.domain.util.DataError
 import com.foivos.mycryptoapp.domain.util.Result
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,6 @@ interface CoinRepository {
 
     suspend fun fetchCoins(): Result<Unit, DataError>
 
-    //suspend fun getCoinDetail(): Result<Coin, DataError.Local>
+    suspend fun fetchCoinDetail(coinId: String): Result<CoinDetail, DataError.Network>
 
 }

@@ -29,7 +29,7 @@ class RoomLocalCoinDataSource @Inject constructor(
             coinDao.upsertCoin(coinEntity)
             Result.Success(coinEntity.id)
         } catch (e: SQLiteFullException) {
-            Result.Error(DataError.Local.DISK_FULL)
+            Result.Error(DataError.Local.STORAGE_FULL)
         }
     }
 
@@ -39,7 +39,7 @@ class RoomLocalCoinDataSource @Inject constructor(
             coinDao.upsertCoins(coinEntities)
             Result.Success(coinEntities.map { it.id })
         } catch (e: Exception) {
-            Result.Error(DataError.Local.DISK_FULL)
+            Result.Error(DataError.Local.STORAGE_FULL)
         }
     }
 }

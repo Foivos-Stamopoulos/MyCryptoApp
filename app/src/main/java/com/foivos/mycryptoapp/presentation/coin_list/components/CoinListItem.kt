@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.dp
 import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.domain.model.Coin
 import com.foivos.mycryptoapp.domain.util.preview_data.CoinProvider
+import com.foivos.mycryptoapp.presentation.ui.theme.GreenActive
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
+import com.foivos.mycryptoapp.presentation.ui.theme.RedInactive
 
 @Composable
 fun CoinListItem(
@@ -35,22 +37,25 @@ fun CoinListItem(
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
             .clickable { onItemClick(coin) }
-            .padding(20.dp),
+            .padding(20.dp)
+        ,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "${coin.rank}. ${coin.name} (${coin.symbol})",
+            modifier = Modifier.weight(8f),
+            text = "${coin.name} (${coin.symbol})",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
+            maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
         Text(
+            modifier = Modifier.align(CenterVertically).weight(2f),
             text = stringResource(id = if (coin.isActive) R.string.active_coin else R.string.inactive_coin),
-            color = if (coin.isActive) Color.Green else Color.Red,
+            color = if (coin.isActive) GreenActive else RedInactive,
             fontStyle = FontStyle.Italic,
             textAlign = TextAlign.End,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.align(CenterVertically)
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

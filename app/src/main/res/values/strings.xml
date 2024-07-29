@@ -7,4 +7,14 @@
     <string name="content_description_go_back">go back</string>
     <string name="team_members">Team members</string>
     <string name="tags">Tags</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">You are currently offline</string>
+    <string name="error_serialization">Could not parse data</string>
+    <string name="error_request_timeout">Request timed out</string>
+    <string name="error_too_many_requests">Rate limit reached</string>
+    <string name="error_server">Something went wrong</string>
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_local_storage_full">Local storage is full</string>
+
 </resources>

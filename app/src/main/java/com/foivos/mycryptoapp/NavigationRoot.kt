@@ -41,7 +41,7 @@ private fun NavGraphBuilder.coinGraph(
             )
         }
         composable(
-            route = "coin_detail" + "/{coinId}"
+            route = "coin_detail" + "/{" + Constants.PARAM_COIN_ID + "}"
         ) {
             CoinDetailScreenRoot(
                 onBackClick = {

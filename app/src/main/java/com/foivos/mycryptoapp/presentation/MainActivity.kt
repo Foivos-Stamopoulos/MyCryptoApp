@@ -1,4 +1,4 @@
-package com.foivos.mycryptoapp
+package com.foivos.mycryptoapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.foivos.mycryptoapp.NavigationRoot
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

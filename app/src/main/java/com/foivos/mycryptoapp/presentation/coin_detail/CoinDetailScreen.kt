@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -20,8 +21,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -41,7 +46,10 @@ import com.foivos.mycryptoapp.presentation.coin_detail.components.CoinTag
 import com.foivos.mycryptoapp.presentation.coin_detail.components.TeamMemberListItem
 import com.foivos.mycryptoapp.presentation.components.MyCryptoToolbar
 import com.foivos.mycryptoapp.presentation.ui.ObserveAsEvents
+import com.foivos.mycryptoapp.presentation.ui.theme.GreenActive
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
+import com.foivos.mycryptoapp.presentation.ui.theme.RedInactive
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -51,15 +59,15 @@ fun CoinDetailScreenRoot(
 ) {
 
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     ObserveAsEvents(flow = viewModel.events) { event ->
         when (event) {
             is CoinDetailEvent.Error -> {
-                Toast.makeText(
-                    context,
-                    event.error.asString(context),
-                    Toast.LENGTH_SHORT
-                ).show()
+                scope.launch {
+                    snackbarHostState.showSnackbar(event.error.asString(context))
+                }
             }
         }
     }
@@ -72,7 +80,8 @@ fun CoinDetailScreenRoot(
                     onBackClick(Unit)
                 }
             }
-        }
+        },
+        snackbarHostState = snackbarHostState
     )
 
 }
@@ -82,7 +91,8 @@ fun CoinDetailScreenRoot(
 @Composable
 fun CoinDetailScreen(
     state: CoinDetailState,
-    action: (CoinDetailAction) -> Unit
+    action: (CoinDetailAction) -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
     Scaffold(
         topBar = {
@@ -92,6 +102,9 @@ fun CoinDetailScreen(
                 onBackClick = {
                     action(CoinDetailAction.OnBackClick)
                 })
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) { paddingValues ->
         Box(
@@ -113,14 +126,14 @@ fun CoinDetailScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "${coin.rank}. ${coin.name} (${coin.symbol})",
+                                text = "${coin.name} (${coin.symbol})",
                                 style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onBackground,
                                 modifier = Modifier
                             )
                             Text(
                                 text = stringResource(id = if (coin.isActive) R.string.active_coin else R.string.inactive_coin) ,
-                                color = if (coin.isActive) Color.Green else Color.Red,
+                                color = if (coin.isActive) GreenActive else RedInactive,
                                 fontStyle = FontStyle.Italic,
                                 textAlign = TextAlign.End,
                                 modifier = Modifier.align(CenterVertically)
@@ -168,7 +181,12 @@ fun CoinDetailScreen(
             }
 
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(24.dp),
+                    strokeWidth = 2.dp
+                )
             }
         }
     }
@@ -183,7 +201,8 @@ fun CoinDetailScreenPreview(@PreviewParameter(CoinDetailProvider::class) coinDet
                 isLoading = false,
                 coinDetail = coinDetail
             ),
-            action = {}
+            action = {},
+            snackbarHostState = remember { SnackbarHostState() }
         )
     }
 }
@@ -197,7 +216,8 @@ fun CoinDetailScreenDarkPreview(@PreviewParameter(CoinDetailProvider::class) coi
                 isLoading = false,
                 coinDetail = coinDetail
             ),
-            action = {}
+            action = {},
+            snackbarHostState = remember { SnackbarHostState() }
         )
     }
 }

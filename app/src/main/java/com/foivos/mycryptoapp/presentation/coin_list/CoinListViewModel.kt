@@ -6,9 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.foivos.mycryptoapp.domain.repository.CoinRepository
-import com.foivos.mycryptoapp.domain.util.DataError
 import com.foivos.mycryptoapp.domain.util.Result
-import com.foivos.mycryptoapp.presentation.ui.UiText
+import com.foivos.mycryptoapp.presentation.ui.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -30,14 +29,13 @@ class CoinListViewModel @Inject constructor(
     private var eventChannel = Channel<CoinListEvent>()
     val events = eventChannel.receiveAsFlow()
 
-
     init {
 
         viewModelScope.launch {
-            val result = coinRepository.fetchCoins()
-            when (result) {
+            when (val result = coinRepository.fetchCoins()) {
                 is Result.Error -> {
-                    eventChannel.send(CoinListEvent.Error(UiText.DynamicString("tourta")))
+                    state = state.copy(isLoading = false)
+                    eventChannel.send(CoinListEvent.Error(result.error.asUiText()))
                 }
                 is Result.Success -> {
                     // Do nothing

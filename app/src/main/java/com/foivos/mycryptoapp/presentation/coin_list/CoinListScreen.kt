@@ -16,9 +16,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,6 +39,7 @@ import com.foivos.mycryptoapp.presentation.coin_list.components.CoinListItem
 import com.foivos.mycryptoapp.presentation.components.MyCryptoToolbar
 import com.foivos.mycryptoapp.presentation.ui.ObserveAsEvents
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun CoinListScreenRoot(
@@ -43,17 +48,17 @@ fun CoinListScreenRoot(
 ) {
 
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     ObserveAsEvents(
         flow = viewModel.events
     ) { event ->
             when (event) {
                 is CoinListEvent.Error -> {
-                    Toast.makeText(
-                        context,
-                        event.error.asString(context),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    scope.launch {
+                        snackbarHostState.showSnackbar(event.error.asString(context))
+                    }
                 }
             }
     }
@@ -66,7 +71,8 @@ fun CoinListScreenRoot(
                     onCoinClick(action.coinId)
                 }
             }
-        }
+        },
+        snackbarHostState = snackbarHostState
     )
 }
 
@@ -74,7 +80,8 @@ fun CoinListScreenRoot(
 @Composable
 fun CoinListScreen(
     state: CoinListState,
-    onAction: (CoinListAction) -> Unit
+    onAction: (CoinListAction) -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
@@ -93,6 +100,9 @@ fun CoinListScreen(
                 ) },
                 scrollBehavior = scrollBehavior
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) {
         paddingValues ->
@@ -109,7 +119,7 @@ fun CoinListScreen(
             ) {
                 items(
                     items = state.coins,
-                    key = { it.id }
+                    //key = { it.id }
                 ) { coin ->
                     CoinListItem(
                         coin = coin,
@@ -138,9 +148,11 @@ fun CoinListScreenDarkPreview(@PreviewParameter(CoinsProvider::class) coins: Lis
     MyCryptoAppTheme {
         CoinListScreen(
             state = CoinListState(
-                coins = coins
+                coins = coins,
+                isLoading = true
             ),
-            onAction = {}
+            onAction = {},
+            remember { SnackbarHostState() }
         )
     }
 }
@@ -151,9 +163,11 @@ fun CoinListScreenPreview(@PreviewParameter(CoinsProvider::class) coins: List<Co
     MyCryptoAppTheme {
         CoinListScreen(
             state = CoinListState(
-                coins = coins
+                coins = coins,
+                isLoading = true
             ),
-            onAction = {}
+            onAction = {},
+            remember { SnackbarHostState() }
         )
     }
 }
