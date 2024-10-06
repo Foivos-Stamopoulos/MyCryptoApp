@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CoinDao {
@@ -17,20 +18,15 @@ interface CoinDao {
     @Query(
         """
             SELECT * 
-            FROM coinentity
+            FROM CoinEntity
             WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%' OR
                 UPPER(:query) == symbol
         """
     )
     suspend fun searchCoin(query: String): List<CoinEntity>
 
-    @Query(
-        """
-            SELECT * 
-            FROM coinentity
-        """
-    )
-    suspend fun getCoins(): List<CoinEntity>
+    @Query("SELECT * FROM CoinEntity")
+    fun getCoins(): Flow<List<CoinEntity>>
 
     @Upsert
     suspend fun upsertCoin(coin: CoinEntity)

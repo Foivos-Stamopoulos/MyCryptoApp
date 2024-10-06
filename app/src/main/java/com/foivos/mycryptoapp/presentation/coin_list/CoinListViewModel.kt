@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,23 +32,28 @@ class CoinListViewModel @Inject constructor(
 
     init {
 
+        coinRepository.getCoins().onStart {
+            Timber.d("getCoins from DB onStart")
+            state = state.copy(isLoading = true)
+        }.onEach { coins ->
+            Timber.d("getCoins from DB onEach")
+            state = state.copy(coins = coins, isLoading = false)
+        }.launchIn(viewModelScope)
+
         viewModelScope.launch {
+            Timber.d("fetchCoins from API started")
             when (val result = coinRepository.fetchCoins()) {
                 is Result.Error -> {
                     state = state.copy(isLoading = false)
                     eventChannel.send(CoinListEvent.Error(result.error.asUiText()))
+                    Timber.d("fetchCoins from API error")
                 }
                 is Result.Success -> {
                     // Do nothing
+                    Timber.d("fetchCoins from API completed successfully")
                 }
             }
         }
-
-        coinRepository.getCoins().onStart {
-            state = state.copy(isLoading = true)
-        }.onEach { coins ->
-            state = state.copy(coins = coins, isLoading = false)
-        }.launchIn(viewModelScope)
     }
 
 }

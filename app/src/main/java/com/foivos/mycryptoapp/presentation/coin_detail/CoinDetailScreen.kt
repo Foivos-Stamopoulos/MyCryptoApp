@@ -139,11 +139,13 @@ fun CoinDetailScreen(
                                 modifier = Modifier.align(CenterVertically)
                             )
                         }
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = coin.description,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        if (coin.description.isNotEmpty()) {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                text = coin.description,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = stringResource(R.string.tags),
@@ -160,22 +162,28 @@ fun CoinDetailScreen(
                                 CoinTag(tag = tag)
                             }
                         }
+                    }
+                    if (coin.team.isNotEmpty()) {
+                    item {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = stringResource(R.string.team_members),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onBackground
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
+                        }
                     }
-                    items(items = coin.team) { teamMember ->
-                        TeamMemberListItem(
-                            teamMember = teamMember,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(10.dp)
-                        )
-                        HorizontalDivider()
+                    if (coin.team.isNotEmpty()) {
+                        items(items = coin.team) { teamMember ->
+                            TeamMemberListItem(
+                                teamMember = teamMember,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp)
+                            )
+                            HorizontalDivider()
+                        }
                     }
                 }
             }

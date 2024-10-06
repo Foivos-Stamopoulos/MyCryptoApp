@@ -9,6 +9,8 @@ import com.foivos.mycryptoapp.domain.util.DataError
 import com.foivos.mycryptoapp.domain.util.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import javax.inject.Inject
 
 class RoomLocalCoinDataSource @Inject constructor(
@@ -16,10 +18,10 @@ class RoomLocalCoinDataSource @Inject constructor(
 ) : LocalCoinDataSource {
 
     override fun getCoins(): Flow<List<Coin>> {
-        return flow {
-            emit(coinDao.getCoins().map {
-                it.toCoin()
-            })
+        return coinDao.getCoins().map { coinEntityList ->
+            coinEntityList.map { coinEntity ->
+                coinEntity.toCoin()
+            }
         }
     }
 
@@ -35,10 +37,13 @@ class RoomLocalCoinDataSource @Inject constructor(
 
     override suspend fun upsertCoins(coins: List<Coin>): Result<List<String>, DataError.Local> {
         return try {
+            Timber.d("upsertCoins started")
             val coinEntities = coins.map { it.toCoinEntity() }
             coinDao.upsertCoins(coinEntities)
+            Timber.d("upsertCoins completed")
             Result.Success(coinEntities.map { it.id })
         } catch (e: Exception) {
+            Timber.d("upsertCoins failed")
             Result.Error(DataError.Local.STORAGE_FULL)
         }
     }

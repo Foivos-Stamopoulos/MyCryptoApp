@@ -1,5 +1,6 @@
 package com.foivos.mycryptoapp.data.remote
 
+import com.foivos.mycryptoapp.data.remote.mappers.toCoin
 import com.foivos.mycryptoapp.data.remote.mappers.toCoinDetail
 import com.foivos.mycryptoapp.domain.data_source.RemoteCoinDataSource
 import com.foivos.mycryptoapp.domain.model.Coin
@@ -14,13 +15,13 @@ class RetrofitRemoteCoinDataSource @Inject constructor(
 ) : RemoteCoinDataSource {
 
     override suspend fun fetchCoins(): Result<List<Coin>, DataError.Network> {
-        /*return try {
+        return try {
             val result = api.fetchCoins()
-            return Result.Success(result.map { it.toCoin() })
+            return Result.Success(result.subList(0, 20).map { it.toCoin() })
         } catch(e: Exception) {
             NetworkHelper.exceptionToErrorResult(e)
-        }*/
-        return mockCoinList
+        }
+        //return mockCoinList
     }
 
     override suspend fun fetchCoinById(coinId: String): Result<CoinDetail, DataError.Network> {
