@@ -184,17 +184,27 @@ class RetrofitRemoteCoinDataSource @Inject constructor(
                 position = "Founder"
             ),
             TeamMember(
+                id = "1",
+                name =  "Juliana Smith",
+                position = "Co-Founder"
+            ),
+            TeamMember(
                 id = "2",
+                name =  "Robert Martin",
+                position = "Co-Founder"
+            ),
+            TeamMember(
+                id = "3",
                 name =  "George Hilt",
                 position = "Blockchain Developer"
             ),
             TeamMember(
-                id = "3",
+                id = "4",
                 name =  "Mark Brown",
                 position = "Blockchain Developer"
             ),
             TeamMember(
-                id = "4",
+                id = "5",
                 name =  "Sara Garcia",
                 position = "Blockchain Developer"
             )

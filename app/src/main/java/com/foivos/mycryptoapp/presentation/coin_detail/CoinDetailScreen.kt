@@ -144,13 +144,13 @@ fun CoinDetailScreen(
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
                                 text = coin.description,
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = stringResource(R.string.tags),
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.height(16.dp))
@@ -169,7 +169,7 @@ fun CoinDetailScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = stringResource(R.string.team_members),
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.height(8.dp))
