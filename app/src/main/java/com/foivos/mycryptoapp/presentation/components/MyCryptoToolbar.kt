@@ -39,7 +39,10 @@ fun MyCryptoToolbar(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 startContent?.invoke()
-                Text(text = title)
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge
+                )
             }
         },
         navigationIcon = {

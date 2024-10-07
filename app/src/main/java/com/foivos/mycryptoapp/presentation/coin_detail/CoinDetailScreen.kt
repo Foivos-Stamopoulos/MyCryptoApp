@@ -134,6 +134,7 @@ fun CoinDetailScreen(
                             Text(
                                 text = stringResource(id = if (coin.isActive) R.string.active_coin else R.string.inactive_coin) ,
                                 color = if (coin.isActive) GreenActive else RedInactive,
+                                style = MaterialTheme.typography.bodyMedium,
                                 fontStyle = FontStyle.Italic,
                                 textAlign = TextAlign.End,
                                 modifier = Modifier.align(CenterVertically)
@@ -143,7 +144,7 @@ fun CoinDetailScreen(
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
                                 text = coin.description,
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyLarge
                             )
                         }
                         Spacer(modifier = Modifier.height(16.dp))
