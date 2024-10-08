@@ -22,6 +22,10 @@ android {
         }
     }
 
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+
     buildTypes {
 
         debug {
@@ -74,6 +78,7 @@ dependencies {
     implementation(libs.squareup.retrofit2)
     implementation(libs.squareup.retrofit2.converter.gson)
     implementation(libs.dagger.hilt.android)
+    testImplementation(libs.junit.jupiter)
     kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.timber)
     implementation(libs.okHttp3.logging.interceptor)
@@ -89,10 +94,14 @@ dependencies {
 
 
     testImplementation(libs.junit)
+    testImplementation(libs.io.mockK)
+    testImplementation(libs.kotlinx.coroutines.test)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

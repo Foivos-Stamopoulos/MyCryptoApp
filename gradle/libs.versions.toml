@@ -18,6 +18,9 @@ navigationCompose = "2.7.7"
 coreSplashscreen = "1.0.1"
 coroutines = "1.8.0"
 androidx-hilt = "1.2.0"
+mockK = "1.13.12"
+junitJupiter = "5.8.1"
+coroutines-test = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,6 +55,11 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+
+io-mockK = { group = "io.mockk", name = "mockk", version.ref = "mockK" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+
 
 
 [plugins]
