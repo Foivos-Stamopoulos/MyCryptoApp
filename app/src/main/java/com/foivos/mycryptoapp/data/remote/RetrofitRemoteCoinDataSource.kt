@@ -15,22 +15,23 @@ class RetrofitRemoteCoinDataSource @Inject constructor(
 ) : RemoteCoinDataSource {
 
     override suspend fun fetchCoins(): Result<List<Coin>, DataError.Network> {
-        /*return try {
+        return try {
             val result = api.fetchCoins()
-            return Result.Success(result.subList(0, 20).map { it.toCoin() })
+            //return Result.Success(result.subList(0, 20).map { it.toCoin() })
+            return Result.Success(result.map { it.toCoin() })
         } catch(e: Exception) {
             NetworkHelper.exceptionToErrorResult(e)
-        }*/
-        return mockCoinList
+        }
+        //return mockCoinList
     }
 
     override suspend fun fetchCoinById(coinId: String): Result<CoinDetail, DataError.Network> {
-        /*return try {
+        return try {
             Result.Success(api.fetchCoinById(coinId).toCoinDetail())
         } catch (e: Exception) {
             NetworkHelper.exceptionToErrorResult(e)
-        }*/
-        return Result.Success(mockCoinDetail)
+        }
+        //return Result.Success(mockCoinDetail)
     }
 
     private val mockCoinList = Result.Success(listOf(

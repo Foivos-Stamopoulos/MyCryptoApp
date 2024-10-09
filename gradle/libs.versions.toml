@@ -21,6 +21,8 @@ androidx-hilt = "1.2.0"
 mockK = "1.13.12"
 junitJupiter = "5.8.1"
 coroutines-test = "1.9.0"
+mockWebserver = "4.12.0"
+gson = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +61,9 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 io-mockK = { group = "io.mockk", name = "mockk", version.ref = "mockK" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+okhttp3-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockWebserver"}
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+
 
 
 
