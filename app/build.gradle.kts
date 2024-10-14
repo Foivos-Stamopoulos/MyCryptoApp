@@ -17,6 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument("runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder") // Use JUnit 5 for local unit tests
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -78,7 +79,7 @@ dependencies {
     implementation(libs.squareup.retrofit2)
     implementation(libs.squareup.retrofit2.converter.gson)
     implementation(libs.dagger.hilt.android)
-    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.junit)
     kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.timber)
     implementation(libs.okHttp3.logging.interceptor)
@@ -97,7 +98,9 @@ dependencies {
     testImplementation(libs.io.mockK)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.okhttp3.mockwebserver)
+    testImplementation(libs.junit.jupiter.api)
 
+    testRuntimeOnly(libs.junit.jupiter.engine)
 
     // Instrumented tests
     androidTestImplementation(libs.androidx.junit)
