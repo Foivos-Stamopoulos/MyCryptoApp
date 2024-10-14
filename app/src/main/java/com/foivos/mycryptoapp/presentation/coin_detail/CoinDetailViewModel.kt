@@ -12,6 +12,7 @@ import com.foivos.mycryptoapp.domain.util.Result
 import com.foivos.mycryptoapp.presentation.ui.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -29,9 +30,11 @@ class CoinDetailViewModel @Inject constructor(
     private var eventChannel = Channel<CoinDetailEvent>()
         val events = eventChannel.receiveAsFlow()
 
+    private val coinId = savedStateHandle.get<String>(Constants.PARAM_COIN_ID)
+
     init {
 
-        savedStateHandle.get<String>(Constants.PARAM_COIN_ID)?.let { coinId ->
+        coinId?.let { coinId ->
             fetchCoinDetail(coinId)
         }
 
