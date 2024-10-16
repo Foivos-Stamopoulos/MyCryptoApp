@@ -12,14 +12,16 @@ class CoinProvider : PreviewParameterProvider<Coin> {
                 isActive = true,
                 name = "Bitcoin",
                 rank = 1,
-                symbol = "BTC"
+                symbol = "BTC",
+                displayName = "Bitcoin (BTC)"
             ),
             Coin(
                 id = "tetherTestId",
                 isActive = false,
                 name = "Tether",
                 rank = 2,
-                symbol = "USDT"
+                symbol = "USDT",
+                displayName = "Tether (USDT)"
             )
         )
 

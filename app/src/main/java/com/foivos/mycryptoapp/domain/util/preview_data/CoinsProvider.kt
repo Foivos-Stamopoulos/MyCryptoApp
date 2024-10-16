@@ -1,6 +1,8 @@
 package com.foivos.mycryptoapp.domain.util.preview_data
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.foivos.mycryptoapp.data.remote.dto.CoinDto
+import com.foivos.mycryptoapp.data.remote.mappers.toCoin
 import com.foivos.mycryptoapp.domain.model.Coin
 
 class CoinsProvider : PreviewParameterProvider<List<Coin>> {
@@ -8,91 +10,115 @@ class CoinsProvider : PreviewParameterProvider<List<Coin>> {
     override val values: Sequence<List<Coin>>
         get() = sequenceOf(
             listOf(
-                Coin(
-                    id = "bitcoinId",
+                CoinDto(
+                    id = "btc-bitcoin",
                     isActive = true,
                     name = "Bitcoin",
-                    rank = 1,
-                    symbol = "BTC"
+                    rank = 0,
+                    symbol = "BTC",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
-                    id = "tetherId",
+                CoinDto(
+                    id = "tether-hermionegrangerclintonamberamyrose9inu",
                     isActive = false,
-                    name = "Tether",
-                    rank = 2,
-                    symbol = "USDT"
+                    name = "HermioneGrangerClintonAmberAmyRose9Inu",
+                    rank = 0,
+                    symbol = "TETHER",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
-                    id = "ethereumId",
+                CoinDto(
+                    id = "ethereum-voldemorttrumprobotnik69pepe",
                     isActive = true,
-                    name = "Ethereum",
-                    rank = 3,
-                    symbol = "ETH"
+                    name = "VoldemortTrumpRobotnik69Pepe",
+                    rank = 0,
+                    symbol = "ETHEREUM",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
-                    id = "cardanoId",
-                    isActive = false,
-                    name = "Cardano",
-                    rank = 4,
-                    symbol = "ADA"
-                ),
-                Coin(
-                    id = "hexId",
+                CoinDto(
+                    id = "hexdc-hexdc",
                     isActive = true,
-                    name = "Hex",
-                    rank = 5,
-                    symbol = "HEX"
+                    name = "HEXDC",
+                    rank = 0,
+                    symbol = "HEXDC",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
-                    id = "binanceCoinId",
+                CoinDto(
+                    id = "bcartel-binance-cartel",
                     isActive = false,
-                    name = "Binance Coin",
-                    rank = 6,
-                    symbol = "BNB"
+                    name = "Binance Cartel",
+                    rank = 0,
+                    symbol = "BCARTEL",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
-                    id = "tetherId",
-                    isActive = false,
-                    name = "Tether",
-                    rank = 7,
-                    symbol = "USDT"
-                ),
-                Coin(
-                    id = "xrpId",
+                CoinDto(
+                    id = "axpr-axpire",
                     isActive = true,
-                    name = "XRP",
-                    rank = 8,
-                    symbol = "XRP"
+                    name = "aXpire",
+                    rank = 0,
+                    symbol = "AXPR",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
+                CoinDto(
                     id = "solanaId",
                     isActive = false,
                     name = "Solana",
-                    rank = 9,
-                    symbol = "SOL"
+                    rank = 0,
+                    symbol = "SOL",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
+                CoinDto(
                     id = "polcadotId",
                     isActive = true,
                     name = "Polkadot",
-                    rank = 10,
-                    symbol = "DOT"
+                    rank = 0,
+                    symbol = "DOT",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
+                CoinDto(
                     id = "usdCoinId",
                     isActive = false,
                     name = "Usd Coin",
-                    rank = 11,
-                    symbol = "USDC"
+                    rank = 0,
+                    symbol = "USDC",
+                    isNew = false,
+                    type = ""
                 ),
-                Coin(
+                CoinDto(
                     id = "uniswapId",
                     isActive = false,
                     name = "Uniswap",
-                    rank = 12,
-                    symbol = "UNI"
+                    rank = 0,
+                    symbol = "UNI",
+                    isNew = false,
+                    type = ""
+                ),
+                CoinDto(
+                    id = "dinu-dogey-inu",
+                    isActive = false,
+                    name = "Dogey-Inu",
+                    rank = 0,
+                    symbol = "DINU",
+                    isNew = false,
+                    type = ""
+                ),
+                CoinDto(
+                    id = "alice-alice",
+                    isActive = false,
+                    name = "Alice",
+                    rank = 0,
+                    symbol = "ALICE",
+                    isNew = false,
+                    type = ""
                 )
-            )
+            ).map { it.toCoin() }
         )
 
 }

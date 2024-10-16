@@ -43,7 +43,7 @@ fun CoinListItem(
     ) {
         Text(
             modifier = Modifier.weight(8f),
-            text = "${coin.name} (${coin.symbol})",
+            text = coin.displayName,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
             maxLines = 1,

@@ -1,5 +1,6 @@
 package com.foivos.mycryptoapp.data.remote
 
+import com.foivos.mycryptoapp.data.remote.dto.CoinDto
 import com.foivos.mycryptoapp.data.remote.mappers.toCoin
 import com.foivos.mycryptoapp.data.remote.mappers.toCoinDetail
 import com.foivos.mycryptoapp.domain.data_source.RemoteCoinDataSource
@@ -22,7 +23,7 @@ class RetrofitRemoteCoinDataSource @Inject constructor(
         } catch(e: Exception) {
             NetworkHelper.exceptionToErrorResult(e)
         }
-        //return mockCoinList
+        //return Result.Success(mockCoinList.map { it.toCoin() })
     }
 
     override suspend fun fetchCoinById(coinId: String): Result<CoinDetail, DataError.Network> {
@@ -34,141 +35,188 @@ class RetrofitRemoteCoinDataSource @Inject constructor(
         //return Result.Success(mockCoinDetail)
     }
 
-    private val mockCoinList = Result.Success(listOf(
-        Coin(
+    private val mockCoinList = listOf(
+        CoinDto(
             id = "btc-bitcoin",
             isActive = true,
             name = "Bitcoin",
             rank = 0,
-            symbol = "BTC"
+            symbol = "BTC",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "tether-hermionegrangerclintonamberamyrose9inu",
             isActive = false,
             name = "HermioneGrangerClintonAmberAmyRose9Inu",
             rank = 0,
-            symbol = "TETHER"
+            symbol = "TETHER",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "ethereum-voldemorttrumprobotnik69pepe",
             isActive = true,
             name = "VoldemortTrumpRobotnik69Pepe",
             rank = 0,
-            symbol = "ETHEREUM"
+            symbol = "ETHEREUM",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "hexdc-hexdc",
             isActive = true,
             name = "HEXDC",
             rank = 0,
-            symbol = "HEXDC"
+            symbol = "HEXDC",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "bcartel-binance-cartel",
             isActive = false,
             name = "Binance Cartel",
             rank = 0,
-            symbol = "BCARTEL"
+            symbol = "BCARTEL",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "axpr-axpire",
             isActive = true,
             name = "aXpire",
             rank = 0,
-            symbol = "AXPR"
+            symbol = "AXPR",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "solanaId",
             isActive = false,
             name = "Solana",
             rank = 0,
-            symbol = "SOL"
+            symbol = "SOL",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "polcadotId",
             isActive = true,
             name = "Polkadot",
             rank = 0,
-            symbol = "DOT"
+            symbol = "DOT",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "usdCoinId",
             isActive = false,
             name = "Usd Coin",
             rank = 0,
-            symbol = "USDC"
+            symbol = "USDC",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "uniswapId",
             isActive = false,
             name = "Uniswap",
             rank = 0,
-            symbol = "UNI"
+            symbol = "UNI",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "dinu-dogey-inu",
             isActive = false,
             name = "Dogey-Inu",
             rank = 0,
-            symbol = "DINU"
+            symbol = "DINU",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "alice-alice",
             isActive = false,
             name = "Alice",
             rank = 0,
-            symbol = "ALICE"
+            symbol = "ALICE",
+            isNew = false,
+            type = ""
         ),
-        Coin(
+        CoinDto(
             id = "quadro-quadrotoken",
             isActive = false,
             name = "QUADROTOKEN",
             rank = 0,
-            symbol = "QUADRO"
-        ), Coin(
+            symbol = "QUADRO",
+            isNew = false,
+            type = ""
+        ),
+        CoinDto(
             id = "crypt-cryptonaught",
             isActive = false,
             name = "CRYPTONAUGHT",
             rank = 0,
-            symbol = "CRYPT"
-        ), Coin(
+            symbol = "CRYPT",
+            isNew = false,
+            type = ""
+        ),
+        CoinDto(
             id = "dseth-diversified-staked-eth-index-dseth",
             isActive = false,
             name = "Diversified Staked ETH Index (dsETH)",
             rank = 0,
-            symbol = "DSETH"
-        ), Coin(
+            symbol = "DSETH",
+            isNew = false,
+            type = ""
+        ),
+        CoinDto(
             id = "tgol-tgonline-token",
             isActive = false,
             name = "TGOnline Token",
             rank = 0,
-            symbol = "TGOL"
-        ), Coin(
+            symbol = "TGOL",
+            isNew = false,
+            type = ""
+        ),
+        CoinDto(
             id = "nepe-nyanpepe",
             isActive = false,
             name = "NyanPepe",
             rank = 0,
-            symbol = "NEPE"
-        ), Coin(
+            symbol = "NEPE",
+            isNew = false,
+            type = ""
+        ),
+        CoinDto(
             id = "gucci-guccicake",
             isActive = false,
             name = "GucciCake",
             rank = 0,
-            symbol = "GUCCI"
-        ), Coin(
+            symbol = "GUCCI",
+            isNew = false,
+            type = ""
+        ),
+        CoinDto(
             id = "popo-popo-the-genie",
             isActive = false,
             name = "POPO The GENIE",
             rank = 0,
-            symbol = "POPO"
-        ), Coin(
+            symbol = "POPO",
+            isNew = false,
+            type = ""
+        ),
+        CoinDto(
             id = "chow-chow-chow",
             isActive = false,
             name = "CHOW CHOW",
             rank = 0,
-            symbol = "CHOW"
+            symbol = "CHOW",
+            isNew = false,
+            type = ""
         )
-    ))
+    )
 
     private val mockCoinDetail = CoinDetail(
         coinId = "1",

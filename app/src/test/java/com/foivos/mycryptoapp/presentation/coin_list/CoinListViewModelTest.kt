@@ -98,7 +98,8 @@ class CoinListViewModelTest {
             isActive = true,
             name = "Bitcoin",
             rank = 0,
-            symbol = "BTC"
+            symbol = "BTC",
+            displayName = "Bitcoin (BTC)"
         )
     )
 

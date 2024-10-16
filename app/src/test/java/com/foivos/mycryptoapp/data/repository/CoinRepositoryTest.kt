@@ -33,8 +33,8 @@ class CoinRepositoryTest {
     fun `getCoins returns a flow of coins`() = runTest {
         // Given
         val coins = listOf(
-            Coin(id = "1", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC"),
-            Coin(id = "2", isActive = false, name = "Solana", rank = 1, symbol = "SLN")
+            Coin(id = "1", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", displayName = "Bitcoin (BTC)"),
+            Coin(id = "2", isActive = false, name = "Solana", rank = 1, symbol = "SLN", displayName = "Solana (SLN)")
         )
         every { localCoinDataSource.getCoins() }.returns(flow { emit(coins) })
 
@@ -53,8 +53,8 @@ class CoinRepositoryTest {
     fun `fetchCoins fetches coins from Api and inserts-updates them in DB`() = runTest {
         // Given
         val coins = listOf(
-            Coin(id = "1", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC"),
-            Coin(id = "2", isActive = false, name = "Solana", rank = 1, symbol = "SLN")
+            Coin(id = "1", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", displayName = "Bitcoin (BTC)"),
+            Coin(id = "2", isActive = false, name = "Solana", rank = 1, symbol = "SLN", displayName = "Solana (SLN)")
         )
         coEvery { remoteCoinDataSource.fetchCoins() }.returns(Result.Success(coins))
         coEvery { localCoinDataSource.upsertCoins(coins) }.returns(Result.Success(listOf("1", "2")))

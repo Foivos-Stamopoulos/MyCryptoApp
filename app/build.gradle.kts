@@ -16,8 +16,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument("runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder") // Use JUnit 5 for local unit tests
+        //testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.foivos.mycryptoapp.HiltTestRunner"
+        //testInstrumentationRunnerArgument("runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder") // Use JUnit 5 for local unit tests
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -99,7 +100,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.okhttp3.mockwebserver)
     testImplementation(libs.junit.jupiter.api)
-
+    kaptTest(libs.dagger.hilt.android.compiler)
     testRuntimeOnly(libs.junit.jupiter.engine)
 
     // Instrumented tests
@@ -108,6 +109,9 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.app.cash.turbine)
+    androidTestImplementation(libs.dagger.hilt.android.testing)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

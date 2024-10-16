@@ -66,7 +66,7 @@ class RoomLocalCoinDataSourceTest {
     @Test
     fun `upsertCoin returns CoinId when coin insertion is successful`() = runTest {
         // Given
-        val coin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC")
+        val coin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", displayName = "Bitcoin (BTC)")
 
         coEvery { coinDao.upsertCoin(any()) } just Runs  // Mock the DAO to perform the upsert
 
@@ -83,7 +83,7 @@ class RoomLocalCoinDataSourceTest {
     @Test
     fun `upsertCoin returns error when coin insertion fails`() = runTest {
         // Given
-        val coin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC")
+        val coin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", displayName = "Bitcoin (BTC)")
 
         coEvery { coinDao.upsertCoin(any()) } throws SQLiteFullException()  // Mock the DAO to throw SQLiteFullException
 
@@ -100,8 +100,8 @@ class RoomLocalCoinDataSourceTest {
     @Test
     fun `upsertCoins returns list of CoinIds when insertion is successful`() = runTest {
         // Given
-        val bitcoin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC")
-        val hexDc = Coin(id = "hexdc-hexdc", isActive = true, name = "HEXDC", rank = 0, symbol = "HEXDC")
+        val bitcoin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", displayName = "Bitcoin (BTC)")
+        val hexDc = Coin(id = "hexdc-hexdc", isActive = true, name = "HEXDC", rank = 0, symbol = "HEXDC", displayName = "HEXDC (HEXDC)")
         val coins = listOf(bitcoin, hexDc)
 
         coEvery { coinDao.upsertCoins(any()) } just Runs  // Mock the DAO to perform the upsert
@@ -121,8 +121,8 @@ class RoomLocalCoinDataSourceTest {
     @Test
     fun `upsertCoins returns error when insertion fails`() = runTest {
         // Given
-        val bitcoin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC")
-        val hexDc = Coin(id = "hexdc-hexdc", isActive = true, name = "HEXDC", rank = 0, symbol = "HEXDC")
+        val bitcoin = Coin(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", displayName = "Bitcoin (BTC)")
+        val hexDc = Coin(id = "hexdc-hexdc", isActive = true, name = "HEXDC", rank = 0, symbol = "HEXDC", displayName = "HEXDC (HEXDC)")
         val coins = listOf(bitcoin, hexDc)
 
         coEvery { coinDao.upsertCoins(any()) } throws SQLiteFullException()  // Mock the DAO to throw SQLiteFullException
