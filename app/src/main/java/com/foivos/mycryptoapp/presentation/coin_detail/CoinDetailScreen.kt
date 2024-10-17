@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -118,6 +119,7 @@ fun CoinDetailScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 16.dp)
+                        .testTag(COIN_DETAIL_CONTENT_TAG)
                     ,
                 ) {
                     item {
@@ -129,7 +131,7 @@ fun CoinDetailScreen(
                                 text = "${coin.name} (${coin.symbol})",
                                 style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onBackground,
-                                modifier = Modifier
+                                modifier = Modifier.testTag(COIN_TITLE_TAG)
                             )
                             Text(
                                 text = stringResource(id = if (coin.isActive) R.string.active_coin else R.string.inactive_coin) ,
@@ -137,7 +139,7 @@ fun CoinDetailScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontStyle = FontStyle.Italic,
                                 textAlign = TextAlign.End,
-                                modifier = Modifier.align(CenterVertically)
+                                modifier = Modifier.align(CenterVertically).testTag(COIN_DESCRIPTION_TAG)
                             )
                         }
                         if (coin.description.isNotEmpty()) {
@@ -230,3 +232,7 @@ fun CoinDetailScreenDarkPreview(@PreviewParameter(CoinDetailProvider::class) coi
         )
     }
 }
+
+const val COIN_TITLE_TAG = "coin_title"
+const val COIN_DESCRIPTION_TAG = "coin_description"
+const val COIN_DETAIL_CONTENT_TAG = "coin_content"

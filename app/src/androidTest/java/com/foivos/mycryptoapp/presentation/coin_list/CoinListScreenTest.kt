@@ -10,6 +10,7 @@ import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.data.di.FakeCoinRepositoryImpl
 import com.foivos.mycryptoapp.data.di.coins
 import com.foivos.mycryptoapp.presentation.MainActivity
+import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -20,7 +21,7 @@ import org.junit.Test
 class CoinListScreenTest {
 
     @get:Rule(order = 1)
-    var hiltTestRule = HiltAndroidRule(this)
+    val hiltTestRule = HiltAndroidRule(this)
 
     @get: Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -37,11 +38,15 @@ class CoinListScreenTest {
     fun verify_content() {
         fakeCoinRepository.setShouldReturnNetworkError(false)
 
+        val viewModel = CoinListViewModel(fakeCoinRepository)
+
         composeTestRule.activity.setContent {
-            val viewModel = CoinListViewModel(fakeCoinRepository)
-            CoinListScreenRoot(
-                onCoinClick = {},
-                viewModel = viewModel)
+            MyCryptoAppTheme {
+                CoinListScreenRoot(
+                    onCoinClick = {},
+                    viewModel = viewModel
+                )
+            }
         }
 
         composeTestRule.onNodeWithTag(CoinListTag).assertIsDisplayed()
@@ -69,11 +74,15 @@ class CoinListScreenTest {
     fun display_message_on_network_request_error() {
         fakeCoinRepository.setShouldReturnNetworkError(true)
 
+        val viewModel = CoinListViewModel(fakeCoinRepository)
+
         composeTestRule.activity.setContent {
-            val viewModel = CoinListViewModel(fakeCoinRepository)
-            CoinListScreenRoot(
-                onCoinClick = {},
-                viewModel = viewModel)
+            MyCryptoAppTheme {
+                CoinListScreenRoot(
+                    onCoinClick = {},
+                    viewModel = viewModel
+                )
+            }
         }
 
         val error = composeTestRule.activity.getString(R.string.error_unknown)

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Singleton
 
-@TestInstallIn(components = [SingletonComponent::class],
+/*@TestInstallIn(components = [SingletonComponent::class],
     replaces = [CoinRepositoryModule::class])
 @Module
 object FakeCoinRepositoryModule {
@@ -26,7 +26,7 @@ object FakeCoinRepositoryModule {
         return FakeCoinRepositoryImpl()
     }
 
-}
+}*/
 
 class FakeCoinRepositoryImpl: CoinRepository {
 
@@ -86,7 +86,7 @@ val coinDetail = CoinDetail(
     symbol = "BTC",
     rank = 1,
     isActive = true,
-    tags = listOf("Mining", "Cryptocurrency", "Payments", "Digital currency", "Encryption", "Virtual accounting system"),
+    tags = listOf("Mining", "Cryptocurrency"),
     team = listOf(
         TeamMember(
             id = "1",
