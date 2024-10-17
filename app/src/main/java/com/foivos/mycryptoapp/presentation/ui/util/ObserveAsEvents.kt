@@ -1,4 +1,4 @@
-package com.foivos.mycryptoapp.presentation.ui
+package com.foivos.mycryptoapp.presentation.ui.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

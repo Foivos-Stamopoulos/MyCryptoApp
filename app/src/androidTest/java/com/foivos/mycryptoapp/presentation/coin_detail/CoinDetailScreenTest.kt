@@ -11,9 +11,9 @@ import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.data.di.FakeCoinRepositoryImpl
 import com.foivos.mycryptoapp.presentation.MainActivity
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
+import com.foivos.mycryptoapp.presentation.ui.util.TestTags
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.flow.first
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,10 +21,10 @@ import org.junit.Test
 @HiltAndroidTest
 class CoinDetailScreenTest {
 
-    @get: Rule(order = 1)
+    @get: Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 2)
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var fakeCoinRepository: FakeCoinRepositoryImpl
@@ -51,8 +51,8 @@ class CoinDetailScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag(COIN_TITLE_TAG).assertIsDisplayed()
-        composeTestRule.onNodeWithTag(COIN_DESCRIPTION_TAG).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TestTags.COIN_TITLE).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TestTags.COIN_DESCRIPTION).assertIsDisplayed()
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.tags)).assertIsDisplayed()
         composeTestRule.onNodeWithText("Mining").assertIsDisplayed()
         composeTestRule.onNodeWithText("Cryptocurrency").assertIsDisplayed()
@@ -77,7 +77,7 @@ class CoinDetailScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag(COIN_DETAIL_CONTENT_TAG).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(TestTags.COIN_DETAIL_CONTENT).assertDoesNotExist()
 
         val error = composeTestRule.activity.getString(R.string.error_unknown)
         composeTestRule.onNodeWithText(error).assertIsDisplayed()

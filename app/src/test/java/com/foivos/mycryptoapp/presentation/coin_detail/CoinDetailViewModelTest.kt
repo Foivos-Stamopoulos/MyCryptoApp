@@ -7,8 +7,8 @@ import com.foivos.mycryptoapp.domain.model.TeamMember
 import com.foivos.mycryptoapp.domain.repository.CoinRepository
 import com.foivos.mycryptoapp.domain.util.DataError
 import com.foivos.mycryptoapp.domain.util.Result
-import com.foivos.mycryptoapp.presentation.ui.UiText
-import com.foivos.mycryptoapp.presentation.ui.asUiText
+import com.foivos.mycryptoapp.presentation.ui.util.UiText
+import com.foivos.mycryptoapp.presentation.ui.util.asUiText
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

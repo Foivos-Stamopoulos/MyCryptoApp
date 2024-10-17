@@ -1,7 +1,6 @@
 package com.foivos.mycryptoapp.presentation.coin_list
 
 import android.content.res.Configuration
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,8 +37,9 @@ import com.foivos.mycryptoapp.domain.model.Coin
 import com.foivos.mycryptoapp.domain.util.preview_data.CoinsProvider
 import com.foivos.mycryptoapp.presentation.coin_list.components.CoinListItem
 import com.foivos.mycryptoapp.presentation.components.MyCryptoToolbar
-import com.foivos.mycryptoapp.presentation.ui.ObserveAsEvents
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
+import com.foivos.mycryptoapp.presentation.ui.util.ObserveAsEvents
+import com.foivos.mycryptoapp.presentation.ui.util.TestTags
 import kotlinx.coroutines.launch
 
 @Composable
@@ -117,7 +117,7 @@ fun CoinListScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .testTag(CoinListTag)
+                    .testTag(TestTags.COIN_LIST)
             ) {
                 items(
                     items = state.coins,
@@ -173,6 +173,4 @@ fun CoinListScreenPreview(@PreviewParameter(CoinsProvider::class) coins: List<Co
         )
     }
 }
-
-const val CoinListTag = "CoinList"
 

@@ -11,6 +11,7 @@ import com.foivos.mycryptoapp.data.di.FakeCoinRepositoryImpl
 import com.foivos.mycryptoapp.data.di.coins
 import com.foivos.mycryptoapp.presentation.MainActivity
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
+import com.foivos.mycryptoapp.presentation.ui.util.TestTags
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -20,10 +21,10 @@ import org.junit.Test
 @HiltAndroidTest
 class CoinListScreenTest {
 
-    @get:Rule(order = 1)
+    @get:Rule(order = 0)
     val hiltTestRule = HiltAndroidRule(this)
 
-    @get: Rule(order = 2)
+    @get: Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var fakeCoinRepository: FakeCoinRepositoryImpl
@@ -49,7 +50,7 @@ class CoinListScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag(CoinListTag).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TestTags.COIN_LIST).assertIsDisplayed()
 
         val appName = composeTestRule.activity.getString(R.string.app_name)
         composeTestRule.onNodeWithText(appName).assertIsDisplayed()

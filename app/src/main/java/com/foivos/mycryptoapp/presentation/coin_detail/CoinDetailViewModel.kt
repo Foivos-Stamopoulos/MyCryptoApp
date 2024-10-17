@@ -9,13 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.foivos.mycryptoapp.Constants
 import com.foivos.mycryptoapp.domain.repository.CoinRepository
 import com.foivos.mycryptoapp.domain.util.Result
-import com.foivos.mycryptoapp.presentation.ui.asUiText
+import com.foivos.mycryptoapp.presentation.ui.util.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

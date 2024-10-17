@@ -1,4 +1,4 @@
-package com.foivos.mycryptoapp.presentation.ui
+package com.foivos.mycryptoapp.presentation.ui.util
 
 import android.content.Context
 import androidx.annotation.StringRes

@@ -1,7 +1,6 @@
 package com.foivos.mycryptoapp.presentation.coin_detail
 
 import android.content.res.Configuration
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,7 +29,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -46,10 +44,11 @@ import com.foivos.mycryptoapp.domain.util.preview_data.CoinDetailProvider
 import com.foivos.mycryptoapp.presentation.coin_detail.components.CoinTag
 import com.foivos.mycryptoapp.presentation.coin_detail.components.TeamMemberListItem
 import com.foivos.mycryptoapp.presentation.components.MyCryptoToolbar
-import com.foivos.mycryptoapp.presentation.ui.ObserveAsEvents
 import com.foivos.mycryptoapp.presentation.ui.theme.GreenActive
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 import com.foivos.mycryptoapp.presentation.ui.theme.RedInactive
+import com.foivos.mycryptoapp.presentation.ui.util.ObserveAsEvents
+import com.foivos.mycryptoapp.presentation.ui.util.TestTags
 import kotlinx.coroutines.launch
 
 
@@ -119,7 +118,7 @@ fun CoinDetailScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 16.dp)
-                        .testTag(COIN_DETAIL_CONTENT_TAG)
+                        .testTag(TestTags.COIN_DETAIL_CONTENT)
                     ,
                 ) {
                     item {
@@ -131,7 +130,7 @@ fun CoinDetailScreen(
                                 text = "${coin.name} (${coin.symbol})",
                                 style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onBackground,
-                                modifier = Modifier.testTag(COIN_TITLE_TAG)
+                                modifier = Modifier.testTag(TestTags.COIN_TITLE)
                             )
                             Text(
                                 text = stringResource(id = if (coin.isActive) R.string.active_coin else R.string.inactive_coin) ,
@@ -139,7 +138,7 @@ fun CoinDetailScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontStyle = FontStyle.Italic,
                                 textAlign = TextAlign.End,
-                                modifier = Modifier.align(CenterVertically).testTag(COIN_DESCRIPTION_TAG)
+                                modifier = Modifier.align(CenterVertically).testTag(TestTags.COIN_DESCRIPTION)
                             )
                         }
                         if (coin.description.isNotEmpty()) {
@@ -232,7 +231,3 @@ fun CoinDetailScreenDarkPreview(@PreviewParameter(CoinDetailProvider::class) coi
         )
     }
 }
-
-const val COIN_TITLE_TAG = "coin_title"
-const val COIN_DESCRIPTION_TAG = "coin_description"
-const val COIN_DETAIL_CONTENT_TAG = "coin_content"
