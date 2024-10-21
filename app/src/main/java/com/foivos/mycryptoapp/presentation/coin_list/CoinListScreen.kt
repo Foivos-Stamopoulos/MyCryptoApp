@@ -38,8 +38,8 @@ import com.foivos.mycryptoapp.domain.util.preview_data.CoinsProvider
 import com.foivos.mycryptoapp.presentation.coin_list.components.CoinListItem
 import com.foivos.mycryptoapp.presentation.components.MyCryptoToolbar
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
-import com.foivos.mycryptoapp.presentation.ui.util.ObserveAsEvents
-import com.foivos.mycryptoapp.presentation.ui.util.TestTags
+import com.foivos.mycryptoapp.presentation.util.ObserveAsEvents
+import com.foivos.mycryptoapp.presentation.util.TestTags
 import kotlinx.coroutines.launch
 
 @Composable

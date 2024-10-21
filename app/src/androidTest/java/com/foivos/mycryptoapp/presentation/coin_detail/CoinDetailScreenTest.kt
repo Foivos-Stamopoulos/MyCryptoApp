@@ -11,7 +11,7 @@ import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.data.di.FakeCoinRepositoryImpl
 import com.foivos.mycryptoapp.presentation.MainActivity
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
-import com.foivos.mycryptoapp.presentation.ui.util.TestTags
+import com.foivos.mycryptoapp.presentation.util.TestTags
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before

@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.foivos.mycryptoapp.Constants
 import com.foivos.mycryptoapp.domain.repository.CoinRepository
 import com.foivos.mycryptoapp.domain.util.Result
-import com.foivos.mycryptoapp.presentation.ui.util.asUiText
+import com.foivos.mycryptoapp.presentation.util.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow

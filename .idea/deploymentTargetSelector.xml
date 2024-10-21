@@ -13,9 +13,6 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="CoinListScreenTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="coin_details_are_displayed_successfully()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>

@@ -1,6 +1,6 @@
 package com.foivos.mycryptoapp.presentation.coin_list
 
-import com.foivos.mycryptoapp.presentation.ui.util.UiText
+import com.foivos.mycryptoapp.presentation.util.UiText
 
 sealed interface CoinListEvent {
 

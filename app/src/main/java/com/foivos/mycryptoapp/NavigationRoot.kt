@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.foivos.mycryptoapp.presentation.coin_detail.CoinDetailScreenRoot
 import com.foivos.mycryptoapp.presentation.coin_list.CoinListScreenRoot
+import com.foivos.mycryptoapp.presentation.util.Graph
+import com.foivos.mycryptoapp.presentation.util.Screen
 
 @Composable
 fun NavigationRoot(
@@ -16,7 +18,7 @@ fun NavigationRoot(
 
     NavHost(
         navController = navController,
-        startDestination = "coin"
+        startDestination = Graph.Coin.route
     ) {
         coinGraph(navController)
     }
@@ -27,20 +29,18 @@ private fun NavGraphBuilder.coinGraph(
     navController: NavHostController
 ) {
     navigation(
-        startDestination = "coin_list",
-        route = "coin"
+        startDestination = Screen.CoinListScreen.route,
+        route = Graph.Coin.route
     ) {
-        composable(
-            route = "coin_list"
-        ) {
+        composable(route = Screen.CoinListScreen.route) {
             CoinListScreenRoot(
                 onCoinClick = {
-                    navController.navigate(route = "coin_detail/$it")
+                    navController.navigate(route = Screen.CoinDetailScreen.route + "/$it")
                 }
             )
         }
         composable(
-            route = "coin_detail" + "/{" + Constants.PARAM_COIN_ID + "}"
+            route = Screen.CoinDetailScreen.route + "/{" + Constants.PARAM_COIN_ID + "}"
         ) {
             CoinDetailScreenRoot(
                 onBackClick = {

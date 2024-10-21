@@ -47,8 +47,8 @@ import com.foivos.mycryptoapp.presentation.components.MyCryptoToolbar
 import com.foivos.mycryptoapp.presentation.ui.theme.GreenActive
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 import com.foivos.mycryptoapp.presentation.ui.theme.RedInactive
-import com.foivos.mycryptoapp.presentation.ui.util.ObserveAsEvents
-import com.foivos.mycryptoapp.presentation.ui.util.TestTags
+import com.foivos.mycryptoapp.presentation.util.ObserveAsEvents
+import com.foivos.mycryptoapp.presentation.util.TestTags
 import kotlinx.coroutines.launch
 
 

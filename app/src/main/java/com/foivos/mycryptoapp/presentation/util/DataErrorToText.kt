@@ -1,4 +1,4 @@
-package com.foivos.mycryptoapp.presentation.ui.util
+package com.foivos.mycryptoapp.presentation.util
 
 import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.domain.util.DataError

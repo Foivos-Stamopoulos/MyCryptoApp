@@ -4,8 +4,8 @@ import com.foivos.mycryptoapp.domain.model.Coin
 import com.foivos.mycryptoapp.domain.repository.CoinRepository
 import com.foivos.mycryptoapp.domain.util.DataError
 import com.foivos.mycryptoapp.domain.util.Result
-import com.foivos.mycryptoapp.presentation.ui.util.UiText
-import com.foivos.mycryptoapp.presentation.ui.util.asUiText
+import com.foivos.mycryptoapp.presentation.util.UiText
+import com.foivos.mycryptoapp.presentation.util.asUiText
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
