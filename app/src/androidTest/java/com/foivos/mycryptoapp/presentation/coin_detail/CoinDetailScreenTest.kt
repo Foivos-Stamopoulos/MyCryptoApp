@@ -12,6 +12,7 @@ import com.foivos.mycryptoapp.data.di.FakeCoinRepositoryImpl
 import com.foivos.mycryptoapp.presentation.MainActivity
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 import com.foivos.mycryptoapp.presentation.util.TestTags
+import com.foivos.mycryptoapp.util.onNodeWithStringId
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -21,10 +22,10 @@ import org.junit.Test
 @HiltAndroidTest
 class CoinDetailScreenTest {
 
-    @get: Rule(order = 0)
+    @get: Rule(order = 1)
     val hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 1)
+    @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var fakeCoinRepository: FakeCoinRepositoryImpl
@@ -53,10 +54,10 @@ class CoinDetailScreenTest {
 
         composeTestRule.onNodeWithTag(TestTags.COIN_TITLE).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTags.COIN_DESCRIPTION).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.tags)).assertIsDisplayed()
+        composeTestRule.onNodeWithStringId(R.string.tags).assertIsDisplayed()
         composeTestRule.onNodeWithText("Mining").assertIsDisplayed()
         composeTestRule.onNodeWithText("Cryptocurrency").assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.team_members)).assertIsDisplayed()
+        composeTestRule.onNodeWithStringId(R.string.team_members).assertIsDisplayed()
         composeTestRule.onNodeWithText("John Smith").assertIsDisplayed()
         composeTestRule.onNodeWithText("Founder").assertIsDisplayed()
         composeTestRule.onNodeWithText("Juliana Smith").assertIsDisplayed()
@@ -79,8 +80,7 @@ class CoinDetailScreenTest {
 
         composeTestRule.onNodeWithTag(TestTags.COIN_DETAIL_CONTENT).assertDoesNotExist()
 
-        val error = composeTestRule.activity.getString(R.string.error_unknown)
-        composeTestRule.onNodeWithText(error).assertIsDisplayed()
+        composeTestRule.onNodeWithStringId(R.string.error_unknown).assertIsDisplayed()
 
     }
 

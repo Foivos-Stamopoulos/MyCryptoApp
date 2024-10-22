@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Singleton
 
-/*@TestInstallIn(components = [SingletonComponent::class],
+@TestInstallIn(components = [SingletonComponent::class],
     replaces = [CoinRepositoryModule::class])
 @Module
 object FakeCoinRepositoryModule {
@@ -26,7 +26,7 @@ object FakeCoinRepositoryModule {
         return FakeCoinRepositoryImpl()
     }
 
-}*/
+}
 
 class FakeCoinRepositoryImpl: CoinRepository {
 

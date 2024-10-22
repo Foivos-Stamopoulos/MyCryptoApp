@@ -12,6 +12,7 @@ import com.foivos.mycryptoapp.data.di.coins
 import com.foivos.mycryptoapp.presentation.MainActivity
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 import com.foivos.mycryptoapp.presentation.util.TestTags
+import com.foivos.mycryptoapp.util.onNodeWithStringId
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -21,10 +22,10 @@ import org.junit.Test
 @HiltAndroidTest
 class CoinListScreenTest {
 
-    @get:Rule(order = 0)
+    @get:Rule(order = 1)
     val hiltTestRule = HiltAndroidRule(this)
 
-    @get: Rule(order = 1)
+    @get: Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var fakeCoinRepository: FakeCoinRepositoryImpl
@@ -52,8 +53,7 @@ class CoinListScreenTest {
 
         composeTestRule.onNodeWithTag(TestTags.COIN_LIST).assertIsDisplayed()
 
-        val appName = composeTestRule.activity.getString(R.string.app_name)
-        composeTestRule.onNodeWithText(appName).assertIsDisplayed()
+        composeTestRule.onNodeWithStringId(R.string.app_name).assertIsDisplayed()
 
         val moneyIconContentDescription = composeTestRule.activity.getString(R.string.content_description_money)
         composeTestRule.onNodeWithContentDescription(moneyIconContentDescription).assertIsDisplayed()
@@ -62,11 +62,9 @@ class CoinListScreenTest {
             composeTestRule.onNodeWithText(item.displayName).assertIsDisplayed()
 
             if (item.isActive) {
-                val active = composeTestRule.activity.getString(R.string.active_coin)
-                composeTestRule.onNodeWithText(active).assertIsDisplayed()
+                composeTestRule.onNodeWithStringId(R.string.active_coin).assertIsDisplayed()
             } else {
-                val inactive = composeTestRule.activity.getString(R.string.inactive_coin)
-                composeTestRule.onNodeWithText(inactive).assertIsDisplayed()
+                composeTestRule.onNodeWithStringId(R.string.inactive_coin).assertIsDisplayed()
             }
         }
     }
@@ -86,8 +84,7 @@ class CoinListScreenTest {
             }
         }
 
-        val error = composeTestRule.activity.getString(R.string.error_unknown)
-        composeTestRule.onNodeWithText(error).assertIsDisplayed()
+        composeTestRule.onNodeWithStringId(R.string.error_unknown).assertIsDisplayed()
     }
 
 }
