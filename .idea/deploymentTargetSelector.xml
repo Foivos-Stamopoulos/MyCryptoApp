@@ -16,16 +16,16 @@
       <SelectionState runConfigName="navHost_verify_that_CoinListScreen_is_the_start_destination()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="myCryptoAppNavHost_verifyStartDestination()">
+      <SelectionState runConfigName="display_snackBar_when_network_request_fails()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="CoinListScreenNavigationTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="CoinListScreenTest">
+      <SelectionState runConfigName="pressing_back_in_CoinDetails_screen_navigates_to_CoinsListScreen()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="CoinDetailScreenTest">
+      <SelectionState runConfigName="pressing_toolbar_back_arrow_from_CoinDetailsScreen_navigates_to_CoinListScreen()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

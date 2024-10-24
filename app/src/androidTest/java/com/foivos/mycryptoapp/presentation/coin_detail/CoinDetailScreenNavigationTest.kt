@@ -1,12 +1,15 @@
-package com.foivos.mycryptoapp.presentation.coin_list
+package com.foivos.mycryptoapp.presentation.coin_detail
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
+import androidx.test.espresso.Espresso
 import com.foivos.mycryptoapp.HiltTestActivity
+import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.data.di.FakeCoinRepositoryImpl
 import com.foivos.mycryptoapp.data.di.coins
 import com.foivos.mycryptoapp.presentation.MyCryptoApp
@@ -20,20 +23,20 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-class CoinListScreenNavigationTest {
+class CoinDetailScreenNavigationTest {
 
     @get:Rule(order = 1)
-    val hiltAndroidRule = HiltAndroidRule(this)
+    val hiltTestRule = HiltAndroidRule(this)
 
     @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<HiltTestActivity>()
 
-    private lateinit var navController: TestNavHostController
     private lateinit var fakeCoinRepository: FakeCoinRepositoryImpl
+    private lateinit var navController: TestNavHostController
 
     @Before
     fun setup() {
-        hiltAndroidRule.inject()
+        hiltTestRule.inject()
         fakeCoinRepository = FakeCoinRepositoryImpl()
         composeTestRule.setContent {
             navController = TestNavHostController(LocalContext.current).apply {
@@ -46,17 +49,19 @@ class CoinListScreenNavigationTest {
     }
 
     @Test
-    fun navHost_verify_that_CoinListScreen_is_the_start_destination() {
+    fun pressing_device_back_button_from_CoinDetailsScreen_navigates_to_CoinListScreen(){
+        val coin = coins.first()
+        composeTestRule.onNodeWithText(coin.displayName).performClick()
+        Espresso.pressBack()
         navController.assertCurrentRouteName(Screen.CoinListScreen.route)
     }
 
     @Test
-    fun click_on_a_coin_navigates_to_CoinDetailScreen() {
+    fun pressing_toolbar_back_arrow_from_CoinDetailsScreen_navigates_to_CoinListScreen(){
         val coin = coins.first()
         composeTestRule.onNodeWithText(coin.displayName).performClick()
-        navController.assertCurrentRouteName("${Screen.CoinDetailScreen.route}/{coinId}")
+        composeTestRule.onNodeWithContentDescription(composeTestRule.activity.getString(R.string.content_description_go_back)).performClick()
+        navController.assertCurrentRouteName(Screen.CoinListScreen.route)
     }
-
-
 
 }
