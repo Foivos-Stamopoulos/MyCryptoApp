@@ -1,20 +1,26 @@
 package com.foivos.mycryptoapp.presentation.coin_detail
 
-import androidx.activity.compose.setContent
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.lifecycle.SavedStateHandle
+import androidx.test.platform.app.InstrumentationRegistry
 import com.foivos.mycryptoapp.Constants
+import com.foivos.mycryptoapp.HiltTestActivity
 import com.foivos.mycryptoapp.R
 import com.foivos.mycryptoapp.data.di.FakeCoinRepositoryImpl
-import com.foivos.mycryptoapp.presentation.MainActivity
 import com.foivos.mycryptoapp.presentation.ui.theme.MyCryptoAppTheme
 import com.foivos.mycryptoapp.presentation.util.TestTags
 import com.foivos.mycryptoapp.util.onNodeWithStringId
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +32,7 @@ class CoinDetailScreenTest {
     val hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 2)
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    val composeTestRule = createAndroidComposeRule<HiltTestActivity>()
 
     private lateinit var fakeCoinRepository: FakeCoinRepositoryImpl
 
@@ -44,7 +50,7 @@ class CoinDetailScreenTest {
         savedStateHandle[Constants.PARAM_COIN_ID] = "1"
         val viewModel = CoinDetailViewModel(fakeCoinRepository, savedStateHandle)
 
-        composeTestRule.activity.setContent {
+        composeTestRule.setContent {
             MyCryptoAppTheme {
                 CoinDetailScreenRoot(
                     onBackClick = {},
@@ -65,22 +71,38 @@ class CoinDetailScreenTest {
     }
 
     @Test
-    fun display_error_message_when_network_call_fails() {
+    fun display_snackbar_with_error_message_when_network_call_fails() {
         fakeCoinRepository.setShouldReturnNetworkError(true)
 
         val savedStateHandle = SavedStateHandle()
         savedStateHandle[Constants.PARAM_COIN_ID] = "1"
         val viewModel = CoinDetailViewModel(fakeCoinRepository, savedStateHandle)
 
-        composeTestRule.activity.setContent {
+        val snackbarHostState = SnackbarHostState()
+        composeTestRule.setContent {
             MyCryptoAppTheme {
-                CoinDetailScreenRoot(onBackClick = {}, viewModel)
+                CoinDetailScreenRoot(
+                    onBackClick = {},
+                    viewModel = viewModel,
+                    snackbarHostState = snackbarHostState
+                )
             }
         }
 
         composeTestRule.onNodeWithTag(TestTags.COIN_DETAIL_CONTENT).assertDoesNotExist()
 
         composeTestRule.onNodeWithStringId(R.string.error_unknown).assertIsDisplayed()
+
+        // Then the first message received in the Snackbar is an error message
+        runBlocking {
+            // snapshotFlow converts a State to a Kotlin Flow so we can observe it
+            // wait for the first a non-null `currentSnackbarData`
+            val actualSnackbarText = snapshotFlow { snackbarHostState.currentSnackbarData }
+                .filterNotNull().first().visuals.message
+            val expectedSnackbarText = InstrumentationRegistry.getInstrumentation()
+                .targetContext.resources.getString(R.string.error_unknown)
+            Assert.assertEquals(expectedSnackbarText, actualSnackbarText)
+        }
 
     }
 

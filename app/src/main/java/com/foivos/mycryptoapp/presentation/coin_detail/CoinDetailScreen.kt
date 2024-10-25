@@ -55,11 +55,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun CoinDetailScreenRoot(
     onBackClick: (Unit) -> Unit,
-    viewModel: CoinDetailViewModel = hiltViewModel()
+    viewModel: CoinDetailViewModel = hiltViewModel(),
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
 
     val context = LocalContext.current
-    val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     ObserveAsEvents(flow = viewModel.events) { event ->
