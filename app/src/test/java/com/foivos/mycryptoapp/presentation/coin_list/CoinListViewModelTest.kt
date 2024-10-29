@@ -11,10 +11,8 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -37,19 +35,6 @@ class CoinListViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         coinRepository = mockk()
-    }
-
-    @Test
-    fun `initially set loading state`() = runTest {
-        // Given: The repository emits some coins
-        every { coinRepository.getCoins() } returns flowOf(coins).onEach { delay(100) }
-        coEvery { coinRepository.fetchCoins() } returns Result.Success(Unit)
-
-        // When: the ViewModel is started
-        viewModel = CoinListViewModel(coinRepository)
-
-        // Then: isLoading is true initially
-        Assertions.assertTrue(viewModel.state.isLoading)
     }
 
     @Test

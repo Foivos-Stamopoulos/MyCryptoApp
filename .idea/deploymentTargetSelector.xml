@@ -13,12 +13,6 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="display_snackbar_message_on_network_request_error()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="click_on_a_coin_navigates_to_CoinDetailScreen()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="CoinListScreenNavigationTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>

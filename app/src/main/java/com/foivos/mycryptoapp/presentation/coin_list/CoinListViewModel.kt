@@ -22,7 +22,7 @@ class CoinListViewModel @Inject constructor(
     private val coinRepository: CoinRepository
 ) : ViewModel() {
 
-    var state by mutableStateOf(CoinListState())
+    var state by mutableStateOf(CoinListState(isLoading = true))
         private set
 
     private var eventChannel = Channel<CoinListEvent>()
@@ -49,7 +49,7 @@ class CoinListViewModel @Inject constructor(
                     eventChannel.send(CoinListEvent.Error(result.error.asUiText()))
                 }
                 is Result.Success -> {
-                    // Do nothing
+                    state = state.copy(isLoading = false)
                 }
             }
         }
