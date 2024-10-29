@@ -36,10 +36,13 @@ class CoinListViewModel @Inject constructor(
         coinRepository.getCoins().onStart {
             state = state.copy(isLoading = true)
         }.onEach { coins ->
-            state = state.copy(coins = coins, isLoading = false)
+            if (coins.isNotEmpty()) {
+                state = state.copy(coins = coins, isLoading = false)
+            }
         }.launchIn(viewModelScope)
 
         viewModelScope.launch {
+            state = state.copy(isLoading = true)
             when (val result = coinRepository.fetchCoins()) {
                 is Result.Error -> {
                     state = state.copy(isLoading = false)
