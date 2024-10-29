@@ -57,6 +57,4 @@ class CoinListScreenNavigationTest {
         navController.assertCurrentRouteName("${Screen.CoinDetailScreen.route}/{coinId}")
     }
 
-
-
 }

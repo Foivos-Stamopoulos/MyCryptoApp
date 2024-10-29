@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-10-07T10:15:29.211952Z">
+        <DropdownSelection timestamp="2024-10-29T07:35:38.365490Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=ce0717171a98662302" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/foivosstamopoulos/.android/avd/Pixel_7_API_33.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -16,16 +16,16 @@
       <SelectionState runConfigName="display_message_on_network_request_error()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="display_error_message_when_network_call_fails()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="CoinDetailScreenTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="coin_details_are_displayed_successfully()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="CoinListScreenTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="display_snackbar_message_on_network_request_error()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="click_on_a_coin_navigates_to_CoinDetailScreen()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="CoinListScreenNavigationTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

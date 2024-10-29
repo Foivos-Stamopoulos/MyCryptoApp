@@ -35,12 +35,16 @@ private fun NavGraphBuilder.coinGraph(
         composable(route = Screen.CoinListScreen.route) {
             CoinListScreenRoot(
                 onCoinClick = {
-                    navController.navigate(route = Screen.CoinDetailScreen.route + "/$it")
+                    navController.navigate(route = Screen.CoinDetailScreen.route + "/{${Constants.PARAM_COIN_ID}}"
+                        .replace(
+                            oldValue = "{${Constants.PARAM_COIN_ID}}",
+                            newValue = it
+                        ))
                 }
             )
         }
         composable(
-            route = Screen.CoinDetailScreen.route + "/{" + Constants.PARAM_COIN_ID + "}"
+            route = Screen.CoinDetailScreen.route + "/{${Constants.PARAM_COIN_ID}}"
         ) {
             CoinDetailScreenRoot(
                 onBackClick = {
