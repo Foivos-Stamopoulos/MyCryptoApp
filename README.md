@@ -16,10 +16,33 @@ This sample contains three screens: a splash screen, a list of cryptos and a det
 
 ## Architecture
 
-The app was implemented using Clean Architecture, MVI(Model-View-Intent) and follows best practices like:
-- Separation of concerns
+The app follows best practices like:
+- Separation of concerns (Clean Architecture)
 - Drive UI from data models
-- Single source of truth
+- Single source of truth -> Room
 - Coroutines and flows
 - Unidirectional Data Flow (UDF)
-- Dependency Injection (DI)
+- Model-View-Intent (MVI)
+- Dependency Injection (DI) -> Hilt
+
+## Testing
+
+To facilitate UI and Navigation testing, MyCryptoApp uses dependency injection with [Hilt](https://developer.android.com/training/dependency-injection/hilt-android).
+
+In Unit Tests, [MockK](https://mockk.io/) is used to mock the dependencies.
+
+In API Unit Tests, [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver) is used to mock HTTP responses.
+
+## UI
+
+The app was designed using Material 3.
+
+The Screens and UI elements are built entirely using [Jetpack Compose](https://developer.android.com/compose).
+
+The app theme also supports dark mode.
+
+## Continuous Integration (CI)
+
+The project contains a CI workflow that uses Github Actions and automates the build and testing pipeline.
+
+
