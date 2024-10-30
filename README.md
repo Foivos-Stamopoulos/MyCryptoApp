@@ -13,6 +13,10 @@ MyCryptoApp is a sample app that displays cryptocurrencies and their related inf
 
 This sample contains three screens: a splash screen, a list of cryptos and a detail page for each crypto.
 
+The app consumes [Coinpaprika API](https://api.coinpaprika.com/) to fetch the list of cryptos and the crypto details.
+
+The list of cryptos is saved in Room local database.
+
 
 ## Architecture
 
