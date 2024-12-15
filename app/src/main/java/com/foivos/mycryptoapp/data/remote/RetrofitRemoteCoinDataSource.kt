@@ -1,12 +1,13 @@
 package com.foivos.mycryptoapp.data.remote
 
+import com.foivos.mycryptoapp.data.remote.NetworkHelper.safeApiCall
+import com.foivos.mycryptoapp.data.remote.dto.CoinDetailDto
 import com.foivos.mycryptoapp.data.remote.dto.CoinDto
-import com.foivos.mycryptoapp.data.remote.mappers.toCoin
-import com.foivos.mycryptoapp.data.remote.mappers.toCoinDetail
+import com.foivos.mycryptoapp.data.remote.dto.LinksDto
+import com.foivos.mycryptoapp.data.remote.dto.TagDto
+import com.foivos.mycryptoapp.data.remote.dto.TeamMemberDto
+import com.foivos.mycryptoapp.data.remote.dto.WhitePaperDto
 import com.foivos.mycryptoapp.domain.data_source.RemoteCoinDataSource
-import com.foivos.mycryptoapp.domain.model.Coin
-import com.foivos.mycryptoapp.domain.model.CoinDetail
-import com.foivos.mycryptoapp.domain.model.TeamMember
 import com.foivos.mycryptoapp.domain.util.DataError
 import com.foivos.mycryptoapp.domain.util.Result
 import javax.inject.Inject
@@ -15,27 +16,17 @@ class RetrofitRemoteCoinDataSource @Inject constructor(
     private val api: CoinPaprikaApi
 ) : RemoteCoinDataSource {
 
-    override suspend fun fetchCoins(): Result<List<Coin>, DataError.Network> {
-        return try {
-            val result = api.fetchCoins()
-            //return Result.Success(result.subList(0, 20).map { it.toCoin() })
-            return Result.Success(result.map { it.toCoin() })
-        } catch(e: Exception) {
-            NetworkHelper.exceptionToErrorResult(e)
-        }
-        //return Result.Success(mockCoinList.map { it.toCoin() })
+    override suspend fun fetchCoins(): Result<List<CoinDto>, DataError.Network> {
+        return safeApiCall { api.fetchCoins() }
+        //return Result.Success(mockCoinsDto)
     }
 
-    override suspend fun fetchCoinById(coinId: String): Result<CoinDetail, DataError.Network> {
-        return try {
-            Result.Success(api.fetchCoinById(coinId).toCoinDetail())
-        } catch (e: Exception) {
-            NetworkHelper.exceptionToErrorResult(e)
-        }
-        //return Result.Success(mockCoinDetail)
+    override suspend fun fetchCoinById(coinId: String): Result<CoinDetailDto, DataError.Network> {
+        return safeApiCall { api.fetchCoinById(coinId) }
+        //return Result.Success(mockCoinDetailDto)
     }
 
-    private val mockCoinList = listOf(
+    private val mockCoinsDto = listOf(
         CoinDto(
             id = "btc-bitcoin",
             isActive = true,
@@ -218,41 +209,56 @@ class RetrofitRemoteCoinDataSource @Inject constructor(
         )
     )
 
-    private val mockCoinDetail = CoinDetail(
-        coinId = "1",
+    private val mockCoinDetailDto = CoinDetailDto(
+        id = "1",
         name = "Bitcoin",
         description = "Bitcoin is lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
         symbol = "BTC",
         rank = 1,
         isActive = true,
-        tags = listOf("Mining", "Cryptocurrency", "Payments", "Digital currency", "Encryption", "Virtual accounting system"),
+        isNew = false,
+        type = "Cryptocurrency",
+        message = null,
+        openSource = true,
+        startedAt = null,
+        developmentStatus = null,
+        hardwareWallet = true,
+        proofType = null,
+        orgStructure = null,
+        hashAlgorithm = null,
+        links = LinksDto(emptyList(), emptyList(), emptyList(), emptyList(), emptyList(), emptyList()),
+        linksExtended = emptyList(),
+        whitePaperDto = WhitePaperDto(null, null),
+        firstDataAt = null,
+        lastDataAt = null,
+        tags = listOf(TagDto(0,0,"AS12D","tag1")),
         team = listOf(
-            TeamMember(
+            TeamMemberDto(
                 id = "1",
                 name =  "John Smith",
                 position = "Founder"
             ),
-            TeamMember(
+            TeamMemberDto(
                 id = "1",
                 name =  "Juliana Smith",
                 position = "Co-Founder"
             ),
-            TeamMember(
+            TeamMemberDto(
                 id = "2",
                 name =  "Robert Martin",
                 position = "Co-Founder"
             ),
-            TeamMember(
+            TeamMemberDto(
                 id = "3",
                 name =  "George Hilt",
                 position = "Blockchain Developer"
             ),
-            TeamMember(
+            TeamMemberDto(
                 id = "4",
                 name =  "Mark Brown",
                 position = "Blockchain Developer"
             ),
-            TeamMember(
+            TeamMemberDto(
                 id = "5",
                 name =  "Sara Garcia",
                 position = "Blockchain Developer"

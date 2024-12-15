@@ -219,6 +219,7 @@
                   <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
                   <entry key="samsung SM-G950F" value="120" />
+                  <entry key="samsung SM-G980F" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>

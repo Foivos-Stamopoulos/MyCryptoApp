@@ -25,7 +25,7 @@ class RetrofitRemoteCoinDataSourceTest {
      */
 
     @Test
-    fun `fetchCoins returns list of Coin`() = runTest {
+    fun `fetchCoins returns list of CoinDto`() = runTest {
         // Given
         val coinDto1 = CoinDto(id = "btc-bitcoin", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", isNew = false, type = "")
         val coinDto2 = CoinDto(id = "tether-hermionegrangerclintonamberamyrose9inu", isActive = false, name = "HermioneGrangerClintonAmberAmyRose9Inu", rank = 0, symbol = "TETHER", isNew = false, type = "")
@@ -61,7 +61,7 @@ class RetrofitRemoteCoinDataSourceTest {
      */
 
     @Test
-    fun `fetchCoinById returns CoinDetail`()  = runTest {
+    fun `fetchCoinById returns CoinDetailDto`()  = runTest {
         // Given
         val coinId = "1"
         coEvery { api.fetchCoinById(coinId) }.returns(coinDetailDto)

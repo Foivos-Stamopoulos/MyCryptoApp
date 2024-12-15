@@ -1,6 +1,8 @@
 package com.foivos.mycryptoapp.data.repository
 
 import com.foivos.mycryptoapp.data.remote.dto.CoinDetailDto
+import com.foivos.mycryptoapp.data.remote.dto.CoinDto
+import com.foivos.mycryptoapp.data.remote.mappers.toCoin
 import com.foivos.mycryptoapp.data.remote.mappers.toCoinDetail
 import com.foivos.mycryptoapp.domain.data_source.LocalCoinDataSource
 import com.foivos.mycryptoapp.domain.data_source.RemoteCoinDataSource
@@ -53,11 +55,11 @@ class CoinRepositoryTest {
     fun `fetchCoins fetches coins from Api and inserts-updates them in DB`() = runTest {
         // Given
         val coins = listOf(
-            Coin(id = "1", isActive = true, name = "Bitcoin", rank = 0, symbol = "BTC", displayName = "Bitcoin (BTC)"),
-            Coin(id = "2", isActive = false, name = "Solana", rank = 1, symbol = "SLN", displayName = "Solana (SLN)")
+            CoinDto(id = "1", isActive = true, isNew = true, name = "Bitcoin", rank = 0, symbol = "BTC", type = ""),
+            CoinDto(id = "2", isActive = false, isNew = true, name = "Solana", rank = 1, symbol = "SLN", type = "")
         )
         coEvery { remoteCoinDataSource.fetchCoins() }.returns(Result.Success(coins))
-        coEvery { localCoinDataSource.upsertCoins(coins) }.returns(Result.Success(listOf("1", "2")))
+        coEvery { localCoinDataSource.upsertCoins(coins.map { it.toCoin() }) }.returns(Result.Success(listOf("1", "2")))
 
 
         // When
@@ -65,7 +67,7 @@ class CoinRepositoryTest {
 
         // Then
         coVerify(exactly = 1) { remoteCoinDataSource.fetchCoins() }
-        coVerify(exactly = 1) { localCoinDataSource.upsertCoins(coins) }
+        coVerify(exactly = 1) { localCoinDataSource.upsertCoins(coins.map { it.toCoin() }) }
     }
 
     @Test
@@ -91,7 +93,7 @@ class CoinRepositoryTest {
         // Given
         val coinId = "btc-bitcoin"
         val mockResponseJson = ClassLoader.getSystemResource("api_response/coin_detail.json").readText()
-        val expectedResponse = Gson().fromJson(mockResponseJson, CoinDetailDto::class.java).toCoinDetail()
+        val expectedResponse = Gson().fromJson(mockResponseJson, CoinDetailDto::class.java)
         coEvery { remoteCoinDataSource.fetchCoinById(coinId) }.returns(Result.Success(expectedResponse))
 
         // When
@@ -100,7 +102,7 @@ class CoinRepositoryTest {
         // Then
         coVerify(exactly = 1) { remoteCoinDataSource.fetchCoinById(coinId) }
         assertTrue(result is Result.Success)
-        assertEquals(expectedResponse, (result as Result.Success).data)
+        assertEquals(expectedResponse.toCoinDetail(), (result as Result.Success).data)
     }
 
     @Test

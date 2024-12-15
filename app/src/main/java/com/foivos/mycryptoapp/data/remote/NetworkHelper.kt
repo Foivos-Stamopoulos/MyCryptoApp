@@ -8,7 +8,16 @@ import kotlin.coroutines.cancellation.CancellationException
 
 object NetworkHelper {
 
-    fun exceptionToErrorResult(e: Exception): Result<Nothing, DataError.Network> {
+    suspend fun <T> safeApiCall(apiCall: suspend () -> T): Result<T, DataError.Network> {
+        return try {
+            val response = apiCall()
+            Result.Success(response)
+        } catch (exception: Throwable) {
+            exceptionToErrorResult(exception)
+        }
+    }
+
+    private fun exceptionToErrorResult(e: Throwable): Result<Nothing, DataError.Network> {
         return when (e) {
             is UnresolvedAddressException -> {
                 e.printStackTrace()
@@ -32,7 +41,8 @@ object NetworkHelper {
     private fun httpExceptionToErrorResult(
         e: HttpException,
     ): Result<Nothing, DataError.Network> {
-        return when(e.code()) {
+        val statusCode = e.code()
+        return when(statusCode) {
             408 -> Result.Error(DataError.Network.REQUEST_TIMEOUT)
             429 -> Result.Error(DataError.Network.TOO_MANY_REQUESTS)
             in 500..599 -> Result.Error(DataError.Network.SERVER_ERROR)

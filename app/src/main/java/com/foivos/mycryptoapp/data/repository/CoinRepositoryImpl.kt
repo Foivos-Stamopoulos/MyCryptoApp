@@ -1,5 +1,7 @@
 package com.foivos.mycryptoapp.data.repository
 
+import com.foivos.mycryptoapp.data.remote.mappers.toCoin
+import com.foivos.mycryptoapp.data.remote.mappers.toCoinDetail
 import com.foivos.mycryptoapp.domain.data_source.LocalCoinDataSource
 import com.foivos.mycryptoapp.domain.data_source.RemoteCoinDataSource
 import com.foivos.mycryptoapp.domain.model.Coin
@@ -27,12 +29,19 @@ class CoinRepositoryImpl @Inject constructor(
                 result
             }
             is Result.Success -> {
-                localCoinDataSource.upsertCoins(result.data).asEmptyDataResult()
+                localCoinDataSource.upsertCoins(result.data.map { it.toCoin() }).asEmptyDataResult()
             }
         }
     }
 
     override suspend fun fetchCoinDetail(coinId: String): Result<CoinDetail, DataError.Network> {
-        return remoteCoinDataSource.fetchCoinById(coinId)
+        return when (val result = remoteCoinDataSource.fetchCoinById(coinId)) {
+            is Result.Error -> {
+                Result.Error(result.error)
+            }
+            is Result.Success -> {
+                Result.Success(result.data.toCoinDetail())
+            }
+        }
     }
 }
