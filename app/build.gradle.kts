@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.foivos.mycryptoapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.foivos.mycryptoapp"
@@ -58,7 +58,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.6"
     }
     packaging {
         resources {
@@ -80,7 +80,6 @@ dependencies {
     implementation(libs.squareup.retrofit2)
     implementation(libs.squareup.retrofit2.converter.gson)
     implementation(libs.dagger.hilt.android)
-    testImplementation(libs.junit.junit)
     kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.timber)
     implementation(libs.okHttp3.logging.interceptor)
